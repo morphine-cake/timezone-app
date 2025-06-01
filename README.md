@@ -1,16 +1,17 @@
-# 🌍 World Clock - Timezone Web Application
+# ⏰ Kairos - Find the perfect time
 
-A beautiful, responsive web application that allows users to track local times across multiple cities worldwide and view time differences between them.
+A beautiful, responsive timezone web application that helps you find the perfect time across multiple cities worldwide. Track local times with automatic location detection and intuitive time comparison.
 
 ## ✨ Features
 
-- **🔍 Smart City Search**: Autocomplete search with keyboard navigation
+- **🔍 Smart City Search**: Modal interface with autocomplete search and keyboard navigation
+- **📍 Auto Location Detection**: Automatically detects your location using GPS and timezone
 - **🕐 Real-time Updates**: Times update automatically every minute
-- **📍 Reference City**: Set any city as reference to see time differences
-- **💾 Persistent Storage**: Selected cities are saved in localStorage
+- **⏰ Custom Time Mode**: Set any custom time and see corresponding times in other cities
+- **💾 Persistent Storage**: Selected cities and recent searches saved in localStorage
 - **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile
 - **♿ Accessible**: Built with ARIA attributes and semantic HTML
-- **🎨 Modern UI**: Clean, professional design with smooth animations
+- **🎨 Modern UI**: Clean, minimal design with uniform 180px city cards
 
 ## 🛠️ Technology Stack
 
@@ -27,21 +28,22 @@ A beautiful, responsive web application that allows users to track local times a
 - **Node.js**: Server runtime
 - **Express.js**: Web framework
 - **CORS**: Cross-origin resource sharing
-- **Intl API**: Native timezone validation
+- **354+ Global Cities**: Comprehensive timezone database
 
 ## 📁 Project Structure
 
 ```
-timezone-app/
+kairos-timezone-app/
 ├── public/
 │   ├── index.html          # Main HTML file
 │   ├── styles/
-│   │   └── main.scss       # SCSS styles
+│   │   ├── main.scss       # SCSS styles
+│   │   └── main.css        # Compiled CSS
 │   └── scripts/
 │       └── app.js          # Frontend JavaScript
 ├── server/
 │   ├── data/
-│   │   └── cities.json     # City and timezone data
+│   │   └── cities.json     # 354+ cities with timezone data
 │   └── index.js            # Express server
 ├── package.json            # Dependencies and scripts
 └── README.md              # This file
@@ -56,10 +58,10 @@ timezone-app/
 
 ### Installation
 
-1. **Clone or create the project**:
+1. **Clone the repository**:
 
    ```bash
-   mkdir timezone-app
+   git clone https://github.com/morphine-cake/timezone-app.git
    cd timezone-app
    ```
 
@@ -69,7 +71,7 @@ timezone-app/
    npm install
    ```
 
-3. **Compile SCSS (optional for development)**:
+3. **Compile SCSS**:
 
    ```bash
    npm run build-css
@@ -94,27 +96,33 @@ timezone-app/
 
 ### Adding Cities
 
-1. Type in the search box to find cities
-2. Use arrow keys to navigate suggestions
-3. Press Enter or click to add a city
-4. The first city becomes the reference automatically
+1. Click the "Add City" button to open the modal
+2. Search for cities using the search box
+3. Select from popular cities or recent cities
+4. Press Enter or click to add a city
 
-### Managing Time Differences
+### Custom Time Mode
 
-1. Select a reference city from the dropdown
-2. Other cities will show time differences relative to the reference
-3. Reference city is marked with a 📍 pin icon
+1. Change the time in the time input field
+2. A "Current Time" button appears to return to current time
+3. All cities show corresponding times based on your custom reference time
 
-### Removing Cities
+### Location Detection
+
+- Kairos automatically detects your location using GPS coordinates
+- Falls back to browser timezone if GPS is unavailable
+- Your location serves as the reference for time differences
+
+### Managing Cities
 
 - Click the ✕ button on any city card to remove it
-- If you remove the reference city, another city becomes the reference
+- Recent cities are saved for quick access in future sessions
 
 ## 🔧 API Endpoints
 
 ### GET /api/cities
 
-Returns list of all available cities with timezone information.
+Returns list of all 354+ available cities with timezone information.
 
 **Response:**
 
@@ -173,6 +181,12 @@ $primary-color: #your-color;
 $font-family: "Your-Font", sans-serif;
 ```
 
+Then recompile:
+
+```bash
+npx sass public/styles/main.scss public/styles/main.css
+```
+
 ## 🌐 Browser Support
 
 - ✅ Chrome 60+
@@ -197,7 +211,4 @@ MIT License - feel free to use this project for personal or commercial purposes.
 - [Luxon](https://moment.github.io/luxon/) for timezone handling
 - [Inter Font](https://rsms.me/inter/) for typography
 - IANA timezone database for accurate timezone data
-
----
-
-Built with ❤️ for global travelers and remote teams!
+- Built with ❤️ for global travelers and remote teams
