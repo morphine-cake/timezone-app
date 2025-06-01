@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "functions": {
+    "app/api/cities/route.ts": {
+      "runtime": "nodejs18.x"
+    },
+    "app/api/time/route.ts": {
+      "runtime": "nodejs18.x"
+    }
+  }
+} 
