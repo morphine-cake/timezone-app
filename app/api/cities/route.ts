@@ -6,9 +6,9 @@ export async function GET() {
   try {
     const citiesPath = join(process.cwd(), "server", "data", "cities.json");
     const citiesData = readFileSync(citiesPath, "utf8");
-    const cities = JSON.parse(citiesData);
+    const citiesObject = JSON.parse(citiesData);
 
-    return NextResponse.json(cities);
+    return NextResponse.json(citiesObject.cities);
   } catch (error) {
     console.error("Error reading cities data:", error);
     return NextResponse.json(

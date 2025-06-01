@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -162,6 +161,17 @@ export default function KairosApp() {
     return `${diffHours}h ${ahead ? "ahead" : "behind"}`;
   };
 
+  // Get badge color based on time difference
+  const getBadgeColor = (timeDiff: string) => {
+    if (timeDiff.includes("ahead")) {
+      return "bg-green-50 text-green-600 hover:bg-green-50";
+    } else if (timeDiff.includes("behind")) {
+      return "bg-red-50 text-red-600 hover:bg-red-50";
+    } else {
+      return "bg-slate-100 text-slate-600 hover:bg-slate-100";
+    }
+  };
+
   // Filter cities for search
   const filteredCities = cities.filter(
     (city) =>
@@ -187,14 +197,14 @@ export default function KairosApp() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <header className="text-left mb-8">
+        <header className="text-left mb-6">
           <h1 className="text-4xl font-bold text-slate-900 mb-2">Kairos</h1>
           <p className="text-lg text-slate-600">Find the perfect time</p>
         </header>
 
         {/* Controls */}
-        <Card className="mb-8">
-          <CardContent className="pt-6">
+        <div className="mb-6">
+          <div className="pt-6">
             {/* User Location */}
             {userLocation && (
               <div className="mb-6">
@@ -232,7 +242,6 @@ export default function KairosApp() {
                       onValueChange={setSearchQuery}
                     />
                     <CommandList>
-                      <CommandEmpty>No cities found.</CommandEmpty>
                       {searchQuery && (
                         <CommandGroup heading="Search Results">
                           {filteredCities.slice(0, 8).map((city) => (
@@ -258,18 +267,20 @@ export default function KairosApp() {
                   {!searchQuery && popularCities.length > 0 && (
                     <div>
                       <h3 className="font-semibold mb-3">Popular Cities</h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         {popularCities.slice(0, 12).map((city) => (
                           <Button
                             key={city.id}
                             variant="outline"
                             size="sm"
                             onClick={() => addCity(city)}
-                            className="justify-start text-left"
+                            className="justify-start text-left h-auto p-3 hover:bg-slate-50"
                           >
-                            <div>
-                              <div className="font-medium">{city.name}</div>
-                              <div className="text-xs text-slate-500">
+                            <div className="w-full">
+                              <div className="font-medium text-sm truncate">
+                                {city.name}
+                              </div>
+                              <div className="text-xs text-slate-500 mt-0.5 truncate">
                                 {city.country}
                               </div>
                             </div>
@@ -283,13 +294,13 @@ export default function KairosApp() {
 
               {/* Time Input */}
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-slate-500" />
+                <div className="relative flex items-center">
+                  <Clock className="absolute left-3 w-4 h-4 text-slate-500 pointer-events-none" />
                   <Input
                     type="time"
                     value={customTime}
                     onChange={(e) => handleTimeChange(e.target.value)}
-                    className="w-32"
+                    className="w-32 pl-10 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clock-icon]:hidden"
                   />
                 </div>
                 {isCustomMode && (
@@ -303,15 +314,17 @@ export default function KairosApp() {
                 )}
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <hr className="border-slate-200 mb-8" />
 
         {/* City Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedCities.length === 0 ? (
             <Card className="col-span-full">
               <CardContent className="pt-8 pb-8 text-center">
-                <Clock className="w-12 h-12 text-slate-400 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-slate-600 mb-2">
                   No cities selected
                 </h3>
@@ -348,12 +361,16 @@ export default function KairosApp() {
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-2">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-slate-900">
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl font-bold text-slate-900 leading-none">
                           {cityTime.toFormat("HH:mm")}
                         </span>
                         {timeDiff && (
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge
+                            className={`text-xs h-fit ${getBadgeColor(
+                              timeDiff
+                            )}`}
+                          >
                             {timeDiff}
                           </Badge>
                         )}
