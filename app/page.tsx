@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -164,21 +165,39 @@ export default function KairosApp() {
   // Get badge color based on time difference
   const getBadgeColor = (timeDiff: string) => {
     if (timeDiff.includes("ahead")) {
-      return "bg-green-50 text-green-600 hover:bg-green-50";
+      return "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20";
     } else if (timeDiff.includes("behind")) {
-      return "bg-red-50 text-red-600 hover:bg-red-50";
+      return "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20";
     } else {
-      return "bg-slate-100 text-slate-600 hover:bg-slate-100";
+      return "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800";
     }
   };
 
   // Filter cities for search
-  const filteredCities = cities.filter(
-    (city) =>
-      !selectedCities.find((selected) => selected.id === city.id) &&
-      (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        city.country.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredCities = cities
+    .filter(
+      (city) =>
+        !selectedCities.find((selected) => selected.id === city.id) &&
+        (city.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          city.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          city.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+          city.country.toLowerCase().startsWith(searchQuery.toLowerCase()))
+    )
+    .sort((a, b) => {
+      const query = searchQuery.toLowerCase();
+      const aNameStarts = a.name.toLowerCase().startsWith(query);
+      const bNameStarts = b.name.toLowerCase().startsWith(query);
+      const aCountryStarts = a.country.toLowerCase().startsWith(query);
+      const bCountryStarts = b.country.toLowerCase().startsWith(query);
+
+      // Prioritize name starts with > country starts with > name includes > country includes
+      if (aNameStarts && !bNameStarts) return -1;
+      if (!aNameStarts && bNameStarts) return 1;
+      if (aCountryStarts && !bCountryStarts) return -1;
+      if (!aCountryStarts && bCountryStarts) return 1;
+
+      return a.name.localeCompare(b.name);
+    });
 
   const popularCities = cities.filter(
     (city) =>
@@ -194,12 +213,19 @@ export default function KairosApp() {
   }, [customTime]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <header className="text-left mb-6">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Kairos</h1>
-          <p className="text-lg text-slate-600">Find the perfect time</p>
+        <header className="text-left mb-6 flex justify-between items-start">
+          <div>
+            <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              Kairos
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              Find the perfect time
+            </p>
+          </div>
+          <ThemeToggle />
         </header>
 
         {/* Controls */}
@@ -208,14 +234,16 @@ export default function KairosApp() {
             {/* User Location */}
             {userLocation && (
               <div className="mb-6">
-                <div className="flex items-center gap-2 text-sm text-slate-600 mb-1">
+                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-1">
                   <MapPin className="w-4 h-4" />
                   Your Location
                 </div>
-                <h2 className="text-2xl font-semibold text-slate-900">
+                <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                   {userLocation.city}
                 </h2>
-                <p className="text-slate-600">{userLocation.country}</p>
+                <p className="text-slate-600 dark:text-slate-400">
+                  {userLocation.country}
+                </p>
               </div>
             )}
 
@@ -241,26 +269,33 @@ export default function KairosApp() {
                       value={searchQuery}
                       onValueChange={setSearchQuery}
                     />
-                    <CommandList>
-                      {searchQuery && (
-                        <CommandGroup heading="Search Results">
-                          {filteredCities.slice(0, 8).map((city) => (
-                            <CommandItem
-                              key={city.id}
-                              onSelect={() => addCity(city)}
-                              className="cursor-pointer"
-                            >
-                              <div>
-                                <div className="font-medium">{city.name}</div>
-                                <div className="text-sm text-slate-500">
-                                  {city.country}
+                    <div className="search-results-container">
+                      <CommandList className="max-h-[200px] overflow-y-auto">
+                        {searchQuery && filteredCities.length > 0 && (
+                          <CommandGroup heading="Search Results">
+                            {filteredCities.slice(0, 8).map((city) => (
+                              <CommandItem
+                                key={city.id}
+                                onSelect={() => addCity(city)}
+                                className="cursor-pointer"
+                              >
+                                <div>
+                                  <div className="font-medium">{city.name}</div>
+                                  <div className="text-sm text-slate-500">
+                                    {city.country}
+                                  </div>
                                 </div>
-                              </div>
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      )}
-                    </CommandList>
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        )}
+                        {searchQuery && filteredCities.length === 0 && (
+                          <div className="px-2 py-3 text-sm text-slate-500 text-center">
+                            No cities found for &ldquo;{searchQuery}&rdquo;
+                          </div>
+                        )}
+                      </CommandList>
+                    </div>
                   </Command>
 
                   {/* Popular Cities */}
@@ -294,13 +329,13 @@ export default function KairosApp() {
 
               {/* Time Input */}
               <div className="flex items-center gap-3">
-                <div className="relative flex items-center">
-                  <Clock className="absolute left-3 w-4 h-4 text-slate-500 pointer-events-none" />
+                <div className="relative flex items-center time-input-wrapper">
+                  <Clock className="absolute left-3 w-4 h-4 text-slate-500 pointer-events-none z-10 clock-icon" />
                   <Input
                     type="time"
                     value={customTime}
                     onChange={(e) => handleTimeChange(e.target.value)}
-                    className="w-32 pl-10 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clock-icon]:hidden"
+                    className="w-32 pl-10 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clock-icon]:hidden [&::-webkit-datetime-edit-fields-wrapper]:pl-0 [&::-webkit-datetime-edit]:pl-0"
                   />
                 </div>
                 {isCustomMode && (
@@ -318,17 +353,17 @@ export default function KairosApp() {
         </div>
 
         {/* Divider */}
-        <hr className="border-slate-200 mb-8" />
+        <hr className="border-slate-200 dark:border-slate-700 mb-8" />
 
         {/* City Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedCities.length === 0 ? (
-            <Card className="col-span-full">
+            <Card className="col-span-full border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
               <CardContent className="pt-8 pb-8 text-center">
-                <h3 className="text-xl font-semibold text-slate-600 mb-2">
+                <h3 className="text-xl font-semibold text-slate-600 dark:text-slate-300 mb-2">
                   No cities selected
                 </h3>
-                <p className="text-slate-500">
+                <p className="text-slate-500 dark:text-slate-400">
                   Add cities to start tracking their local times
                 </p>
               </CardContent>
@@ -341,19 +376,23 @@ export default function KairosApp() {
               return (
                 <Card
                   key={city.id}
-                  className="hover:shadow-md transition-shadow"
+                  className="hover:shadow-md transition-shadow border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
                 >
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-semibold text-lg">{city.name}</h3>
-                        <p className="text-slate-500 text-sm">{city.country}</p>
+                        <h3 className="font-semibold text-lg text-slate-900 dark:text-slate-100">
+                          {city.name}
+                        </h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm">
+                          {city.country}
+                        </p>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => removeCity(city.id)}
-                        className="text-slate-400 hover:text-red-500"
+                        className="text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400"
                       >
                         <X className="w-4 h-4" />
                       </Button>
@@ -362,7 +401,7 @@ export default function KairosApp() {
                   <CardContent className="pt-0">
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <span className="text-3xl font-bold text-slate-900 leading-none">
+                        <span className="text-3xl font-bold text-slate-900 dark:text-slate-100 leading-none">
                           {cityTime.toFormat("HH:mm")}
                         </span>
                         {timeDiff && (
@@ -385,7 +424,7 @@ export default function KairosApp() {
 
         {/* Footer */}
         <footer className="mt-12 text-center">
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
             Built with ❤️ for global travelers and remote teams
           </p>
         </footer>
