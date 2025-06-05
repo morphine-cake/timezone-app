@@ -69,7 +69,7 @@ export function Footer({ className = "", style = {} }: FooterProps) {
               flexShrink: 0,
             }}
           >
-            Design & Code Burak Başcı with Figma & Cursor
+            Made by Burak Başcı with Figma & Cursor
           </div>
 
           {/* Social Links Container - Will wrap to new line on mobile */}
