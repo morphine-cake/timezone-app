@@ -31,13 +31,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Kairos" }],
   creator: "Kairos",
   publisher: "Kairos",
-  icons: {
-    icon: [
-      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.png", sizes: "16x16", type: "image/png" },
-    ],
-    apple: [{ url: "/favicon.png", sizes: "180x180", type: "image/png" }],
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
