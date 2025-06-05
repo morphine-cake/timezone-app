@@ -27,7 +27,8 @@ export function TimeSlider({
 
   useEffect(() => {
     // Set ruler offset based on current time offset
-    const targetOffset = -currentOffset * HOUR_WIDTH;
+    // Positive offset moves ruler right (future), negative offset moves left (past)
+    const targetOffset = currentOffset * HOUR_WIDTH;
     setRulerOffset(targetOffset);
     setContinuousOffset(targetOffset);
   }, [currentOffset]);
@@ -44,7 +45,8 @@ export function TimeSlider({
     setRulerOffset(newOffset);
 
     // Update discrete hour offset
-    const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+    // Drag right = positive hours (future), drag left = negative hours (past)
+    const newHourOffset = Math.round(newOffset / HOUR_WIDTH);
     onTimeOffsetChange(newHourOffset);
 
     // Apply decay
@@ -128,7 +130,8 @@ export function TimeSlider({
       setRulerOffset(newOffset);
 
       // Update discrete hour offset for the parent component
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+      // Drag right = positive hours (future), drag left = negative hours (past)
+      const newHourOffset = Math.round(newOffset / HOUR_WIDTH);
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.clientX);
@@ -164,7 +167,8 @@ export function TimeSlider({
       setRulerOffset(newOffset);
 
       // Update discrete hour offset for the parent component
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+      // Drag right = positive hours (future), drag left = negative hours (past)
+      const newHourOffset = Math.round(newOffset / HOUR_WIDTH);
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.touches[0].clientX);
@@ -203,7 +207,8 @@ export function TimeSlider({
       setRulerOffset(newOffset);
 
       // Update discrete hour offset for the parent component
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+      // Drag right = positive hours (future), drag left = negative hours (past)
+      const newHourOffset = Math.round(newOffset / HOUR_WIDTH);
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.clientX);
@@ -275,7 +280,7 @@ export function TimeSlider({
   const generateRulerLines = () => {
     const lines = [];
     // Calculate the range of hours to show based on current offset
-    const centerHour = Math.round(-rulerOffset / HOUR_WIDTH);
+    const centerHour = Math.round(rulerOffset / HOUR_WIDTH);
     const startHour = centerHour - Math.floor(VISIBLE_LINES / 2);
     const endHour = centerHour + Math.ceil(VISIBLE_LINES / 2);
 
