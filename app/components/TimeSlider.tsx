@@ -326,7 +326,7 @@ export function TimeSlider({
       }}
     >
       {/* Time Slider Section */}
-      <div className="time-slider-section" style={{}}>
+      <div className="time-slider-inner">
         {/* Timeline Ruler */}
         <div
           ref={sliderRef}
@@ -344,8 +344,6 @@ export function TimeSlider({
             WebkitUserSelect: "none", // Disable text selection on iOS
             WebkitOverflowScrolling: "touch", // Better iOS scrolling
             minHeight: "60px", // Larger touch target for mobile
-            paddingTop: "10px", // Extra touch area
-            paddingBottom: "10px", // Extra touch area
           }}
           onTouchStart={handleTouchStart}
           onPointerDown={handlePointerDown}
@@ -432,33 +430,25 @@ export function TimeSlider({
 
         {/* Moving Triangle - Shows where current time appears on dial (positioned below dial) */}
         <div
-          className="triangle-container"
+          className="current-time-triangle"
           style={{
-            position: "relative",
-            top: "4px", // 4px spacing below the dial
-            width: "100%", // Full width to control overflow
+            position: "absolute",
+            left: "50%",
+            bottom: "-12px", // Position below the dial
+            transform: `translateX(calc(-50% + ${
+              currentOffset * HOUR_WIDTH
+            }px))`,
+            width: "0",
+            height: "0",
+            borderLeft: "6px solid transparent",
+            borderRight: "6px solid transparent",
+            borderBottom: "8px solid #FF7C35",
+            zIndex: 11,
           }}
-        >
-          <div
-            className="current-time-triangle"
-            style={{
-              position: "absolute",
-              left: "50%",
-              transform: `translateX(calc(-50% + ${
-                currentOffset * HOUR_WIDTH
-              }px))`,
-              width: "0",
-              height: "0",
-              borderLeft: "6px solid transparent",
-              borderRight: "6px solid transparent",
-              borderBottom: "8px solid #FF7C35",
-              zIndex: 11,
-            }}
-          />
-        </div>
+        />
       </div>
 
-      {/* Left Gradient Fadeaway - covers entire dial section */}
+      {/* Left Gradient Fadeaway - covers entire dial section including triangle area */}
       <div
         className="dial-fadeaway dial-fadeaway--left"
         style={{
@@ -466,14 +456,14 @@ export function TimeSlider({
           top: "0",
           left: "0",
           width: "80px",
-          height: "100%",
+          height: "calc(100% + 20px)", // Extend beyond container to cover triangle
           background: "linear-gradient(to right, #121212, transparent)",
           zIndex: 15,
           pointerEvents: "none",
         }}
       />
 
-      {/* Right Gradient Fadeaway - covers entire dial section */}
+      {/* Right Gradient Fadeaway - covers entire dial section including triangle area */}
       <div
         className="dial-fadeaway dial-fadeaway--right"
         style={{
@@ -481,7 +471,7 @@ export function TimeSlider({
           top: "0",
           right: "0",
           width: "80px",
-          height: "100%",
+          height: "calc(100% + 20px)", // Extend beyond container to cover triangle
           background: "linear-gradient(to left, #121212, transparent)",
           zIndex: 15,
           pointerEvents: "none",

@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import React, { useEffect, useState } from "react";
 import { AnimatedTimeDisplay } from "./components/AnimatedTimeDisplay";
 import { CitySelectionModal } from "./components/CitySelectionModal";
+import { Footer } from "./components/Footer";
 import { TimeSlider } from "./components/TimeSlider";
 
 interface City {
@@ -414,7 +415,10 @@ export default function Home() {
           </div>
 
           {/* Time Slider Row */}
-          <div className="time-slider-section">
+          <div
+            className="time-slider-wrapper"
+            style={{ paddingTop: "24px", overflow: "hidden" }}
+          >
             <TimeSlider
               onTimeOffsetChange={handleTimeOffsetChange}
               currentOffset={timeOffset}
@@ -709,6 +713,12 @@ export default function Home() {
           )}
         </div>
       </main>
+
+      {/* Spacer for fixed footer */}
+      <div style={{ height: "80px" }} />
+
+      {/* Footer */}
+      <Footer />
 
       {/* City Selection Modal */}
       <CitySelectionModal
