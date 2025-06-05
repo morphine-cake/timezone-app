@@ -1,13 +1,158 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Keyframe animations */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Time transition animations */
+@keyframes slideInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutToTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slideOutToBottom {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* Animation utility classes */
+.animate-time-from-top {
+  animation-name: slideInFromTop;
+}
+
+.animate-time-from-bottom {
+  animation-name: slideInFromBottom;
+}
+
+.animated-time-container {
+  min-height: 1.2em; /* Prevent layout shift during animation */
+}
+
+.digit-container {
+  min-height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.digit-display {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+/* Force reset margins and padding */
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #121212 !important;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #121212 !important;
+}
+
+.font-mono {
+  font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+}
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-fira-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -25,8 +170,8 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
+  --color-accent: #FF7C35; /* Orange accent */
+  --color-accent-foreground: #000000;
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -41,28 +186,30 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-manrope: var(--font-manrope);
+  --font-fira-mono: var(--font-fira-mono);
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: #121212;
+  --foreground: #ffffff;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+      --primary: #FF7C35;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #a3a3a3;
+      --accent: #FF7C35;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --border: #333333;
+  --input: #333333;
+      --ring: #FF7C35;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -114,16 +261,18 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    margin: 0;
+    padding: 0;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #ffffff;
   }
 }
 
-/* Mobile time input fixes for clock icon */
+/* Time input fixes */
 @layer utilities {
-  /* Hide all webkit time picker decorations */
   input[type="time"]::-webkit-calendar-picker-indicator,
   input[type="time"]::-webkit-inner-spin-button,
   input[type="time"]::-webkit-clear-button,
@@ -132,10 +281,11 @@
     -webkit-appearance: none !important;
   }
   
-  /* Ensure proper spacing for custom clock icon on mobile */
   @media (max-width: 640px) {
     input[type="time"] {
       padding-left: 2.5rem !important;
+      min-height: 44px;
+      font-size: 16px;
     }
     
     .time-input-wrapper .clock-icon {
@@ -144,14 +294,120 @@
       pointer-events: none !important;
     }
   }
-  
-  /* Better mobile touch targets */
-  @media (max-width: 640px) {
-    input[type="time"] {
-      min-height: 44px;
-      font-size: 16px; /* Prevents zoom on iOS */
-    }
+}
+
+/* Component styles */
+.time-input-wrapper {
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .time-input-wrapper input[type="time"] {
+    padding-left: 2.5rem;
   }
+
+  .clock-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.time-slider {
+  background: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background-color: #FF7C35;
+  border-radius: 1px;
+}
+
+.time-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #FF7C35;
+  cursor: pointer;
+}
+
+.time-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #FF7C35;
+  cursor: pointer;
+  border: none;
+}
+
+.time-ruler {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 24px;
+  margin-bottom: 8px;
+}
+
+.time-line {
+  width: 1px;
+  background-color: #333;
+}
+
+.time-line.hour {
+  height: 16px;
+}
+
+.time-line.half-hour {
+  height: 8px;
+}
+
+.current-time-indicator {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FF7C35;
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.current-time-indicator::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #FF7C35;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 /* Search results fade effect */
@@ -176,23 +432,55 @@
   background: linear-gradient(transparent, hsl(var(--popover)));
 }
 
-/* Mobile optimizations for time input */
-.time-input-wrapper {
-  position: relative;
+/* City List Styles */
+.city-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #333;
 }
 
-@media (max-width: 640px) {
-  .time-input-wrapper input[type="time"] {
-    font-size: 16px; /* Prevent zoom on iOS */
-    min-height: 44px; /* Better touch target */
-  }
-  
-  .clock-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    pointer-events: none;
-  }
+.city-item:last-child {
+  border-bottom: none;
+}
+
+.city-info h3 {
+  font-family: var(--font-manrope);
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.city-info p {
+  font-family: var(--font-manrope);
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 2px 0 0 0;
+}
+
+.city-time {
+  text-align: right;
+}
+
+.city-time .time {
+  font-family: var(--font-fira-mono);
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.city-time .diff {
+  font-family: var(--font-fira-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 2px 0 0 0;
 }
