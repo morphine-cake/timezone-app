@@ -92,7 +92,8 @@ export function TimeSlider({
         cancelAnimationFrame(animationFrameRef.current);
       }
 
-      e.preventDefault();
+      // Don't prevent default to allow better touch scrolling
+      // e.preventDefault();
     }
   };
 
@@ -175,7 +176,10 @@ export function TimeSlider({
       setLastPointerX(e.touches[0].clientX);
       setLastMoveTime(currentTime);
 
-      e.preventDefault();
+      // Only prevent default if we're actually dragging horizontally
+      if (Math.abs(deltaX) > 2) {
+        e.preventDefault();
+      }
     },
     [
       isDragging,
@@ -250,6 +254,9 @@ export function TimeSlider({
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
 
+      // Prevent scrolling on mobile during drag
+      document.body.style.overflow = "hidden";
+
       return () => {
         document.removeEventListener("pointermove", handlePointerMove);
         document.removeEventListener("pointerup", handlePointerUp);
@@ -257,6 +264,9 @@ export function TimeSlider({
         document.removeEventListener("touchend", handleTouchEnd);
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
+
+        // Restore scrolling
+        document.body.style.overflow = "";
       };
     }
   }, [
@@ -340,6 +350,8 @@ export function TimeSlider({
             touchAction: "pan-x", // Allow horizontal panning for touch devices
             WebkitTouchCallout: "none", // Disable iOS callout
             WebkitUserSelect: "none", // Disable text selection on iOS
+            WebkitOverflowScrolling: "touch", // Better iOS scrolling
+            minHeight: "44px", // iOS minimum touch target
           }}
           onPointerDown={handlePointerDown}
           onTouchStart={handleTouchStart}
