@@ -362,8 +362,8 @@ export function TimeSlider({
                 position: "absolute",
                 left:
                   currentOffset > 0
-                    ? "50%"
-                    : `calc(50% + ${currentOffset * HOUR_WIDTH}px)`,
+                    ? `calc(50% + ${-currentOffset * HOUR_WIDTH}px)`
+                    : "50%",
                 width: `${Math.abs(currentOffset * HOUR_WIDTH)}px`,
                 height: "100%",
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
