@@ -66,51 +66,45 @@ export function TimeSlider({
     };
   }, [isDragging, velocity, animateMomentum]);
 
-  // Universal pointer start handler (works for both mouse and touch)
-  const handlePointerDown = (e: React.PointerEvent) => {
+  // Unified start handler for all input types
+  const handleStart = (
+    clientX: number,
+    event: React.TouchEvent | React.PointerEvent | React.MouseEvent
+  ) => {
     setIsDragging(true);
     setVelocity(0); // Stop any momentum
-    setLastPointerX(e.clientX);
+    setLastPointerX(clientX);
     setLastMoveTime(Date.now());
 
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
 
-    e.preventDefault();
-  };
-
-  // Touch-specific start handler for better mobile support
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      setIsDragging(true);
-      setVelocity(0);
-      setLastPointerX(e.touches[0].clientX);
-      setLastMoveTime(Date.now());
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      // Don't prevent default to allow better touch scrolling
-      // e.preventDefault();
+    // Only prevent default for non-touch events to avoid scroll issues
+    if (event.type !== "touchstart") {
+      event.preventDefault();
     }
   };
 
-  // Legacy mouse handler for compatibility
+  // Touch-specific start handler
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      handleStart(e.touches[0].clientX, e);
+    }
+  };
+
+  // Pointer start handler
+  const handlePointerDown = (e: React.PointerEvent) => {
+    // Skip if this is a touch event (will be handled by touch handler)
+    if (e.pointerType === "touch") return;
+    handleStart(e.clientX, e);
+  };
+
+  // Mouse start handler for legacy support
   const handleMouseDown = (e: React.MouseEvent) => {
     // Only handle if it's not a touch event
     if (e.nativeEvent instanceof MouseEvent && e.nativeEvent.detail !== 0) {
-      setIsDragging(true);
-      setVelocity(0);
-      setLastPointerX(e.clientX);
-      setLastMoveTime(Date.now());
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      e.preventDefault();
+      handleStart(e.clientX, e);
     }
   };
 
@@ -176,10 +170,8 @@ export function TimeSlider({
       setLastPointerX(e.touches[0].clientX);
       setLastMoveTime(currentTime);
 
-      // Only prevent default if we're actually dragging horizontally
-      if (Math.abs(deltaX) > 2) {
-        e.preventDefault();
-      }
+      // Always prevent default for touch move to stop scrolling during drag
+      e.preventDefault();
     },
     [
       isDragging,
@@ -351,10 +343,12 @@ export function TimeSlider({
             WebkitTouchCallout: "none", // Disable iOS callout
             WebkitUserSelect: "none", // Disable text selection on iOS
             WebkitOverflowScrolling: "touch", // Better iOS scrolling
-            minHeight: "44px", // iOS minimum touch target
+            minHeight: "60px", // Larger touch target for mobile
+            paddingTop: "10px", // Extra touch area
+            paddingBottom: "10px", // Extra touch area
           }}
-          onPointerDown={handlePointerDown}
           onTouchStart={handleTouchStart}
+          onPointerDown={handlePointerDown}
           onMouseDown={handleMouseDown}
         >
           {/* Time Range Rectangle - shows between current time and selected time */}
