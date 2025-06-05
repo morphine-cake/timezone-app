@@ -441,7 +441,7 @@ export function TimeSlider({
             left: "50%",
             bottom: "-12px", // Position below the dial
             transform: `translateX(calc(-50% + ${
-              currentOffset * HOUR_WIDTH
+              -currentOffset * HOUR_WIDTH
             }px))`,
             width: "0",
             height: "0",
