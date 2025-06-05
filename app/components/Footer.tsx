@@ -1,4 +1,4 @@
-import { HeartIcon, ShareIcon } from "@heroicons/react/24/solid";
+import { ShareIcon } from "@heroicons/react/24/solid";
 
 interface FooterProps {
   className?: string;
@@ -41,18 +41,16 @@ export function Footer({ className = "", style = {} }: FooterProps) {
           padding: "0 24px",
         }}
       >
-        {/* Credits Text & Icons in One Line */}
+        {/* Credits Text */}
         <div
-          className="footer-content-row"
+          className="credits-line"
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: "16px",
-            flexWrap: "wrap",
+            marginBottom: "8px",
           }}
         >
-          {/* Credits Text */}
           <div
             className="credits-text"
             style={{
@@ -64,20 +62,23 @@ export function Footer({ className = "", style = {} }: FooterProps) {
               lineHeight: "normal",
               letterSpacing: "1px",
               textTransform: "uppercase",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
+              textAlign: "center",
             }}
           >
             Design & Code Burak Başcı with Figma & Cursor
-            <HeartIcon
-              style={{
-                width: "14px",
-                height: "14px",
-                color: "#515151",
-              }}
-            />
           </div>
+        </div>
+
+        {/* Social Links & Share Button */}
+        <div
+          className="social-links-line"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "16px",
+          }}
+        >
           {/* Twitter Link */}
           <a
             href="https://x.com/burak_basci"
