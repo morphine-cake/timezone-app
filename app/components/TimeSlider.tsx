@@ -16,7 +16,7 @@ export function TimeSlider({
   const [rulerOffset, setRulerOffset] = useState(0);
   const [continuousOffset, setContinuousOffset] = useState(0); // For smooth continuous dragging
   const [velocity, setVelocity] = useState(0); // For momentum effects
-  const [lastMouseX, setLastMouseX] = useState(0);
+  const [lastPointerX, setLastPointerX] = useState(0);
   const [lastMoveTime, setLastMoveTime] = useState(0);
   const animationFrameRef = useRef<number | null>(null);
 
@@ -66,10 +66,11 @@ export function TimeSlider({
     };
   }, [isDragging, velocity, animateMomentum]);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Universal pointer start handler (works for both mouse and touch)
+  const handlePointerDown = (e: React.PointerEvent) => {
     setIsDragging(true);
     setVelocity(0); // Stop any momentum
-    setLastMouseX(e.clientX);
+    setLastPointerX(e.clientX);
     setLastMoveTime(Date.now());
 
     if (animationFrameRef.current) {
@@ -79,13 +80,46 @@ export function TimeSlider({
     e.preventDefault();
   };
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
+  // Touch-specific start handler for better mobile support
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setVelocity(0);
+      setLastPointerX(e.touches[0].clientX);
+      setLastMoveTime(Date.now());
+
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      e.preventDefault();
+    }
+  };
+
+  // Legacy mouse handler for compatibility
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Only handle if it's not a touch event
+    if (e.nativeEvent instanceof MouseEvent && e.nativeEvent.detail !== 0) {
+      setIsDragging(true);
+      setVelocity(0);
+      setLastPointerX(e.clientX);
+      setLastMoveTime(Date.now());
+
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      e.preventDefault();
+    }
+  };
+
+  const handlePointerMove = useCallback(
+    (e: PointerEvent) => {
       if (!isDragging || !sliderRef.current) return;
 
       const currentTime = Date.now();
       const deltaTime = currentTime - lastMoveTime;
-      const deltaX = e.clientX - lastMouseX;
+      const deltaX = e.clientX - lastPointerX;
 
       // Calculate velocity for momentum
       if (deltaTime > 0) {
@@ -102,18 +136,102 @@ export function TimeSlider({
       const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
       onTimeOffsetChange(newHourOffset);
 
-      setLastMouseX(e.clientX);
+      setLastPointerX(e.clientX);
       setLastMoveTime(currentTime);
     },
     [
       isDragging,
-      lastMouseX,
+      lastPointerX,
       lastMoveTime,
       continuousOffset,
       velocity,
       onTimeOffsetChange,
     ]
   );
+
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isDragging || !sliderRef.current || e.touches.length !== 1) return;
+
+      const currentTime = Date.now();
+      const deltaTime = currentTime - lastMoveTime;
+      const deltaX = e.touches[0].clientX - lastPointerX;
+
+      // Calculate velocity for momentum
+      if (deltaTime > 0) {
+        const currentVelocity = (deltaX / deltaTime) * 16; // Normalize to ~60fps
+        setVelocity(currentVelocity * 0.3 + velocity * 0.7); // Smooth velocity averaging
+      }
+
+      // Update continuous offset for ultra-smooth dragging
+      const newOffset = continuousOffset + deltaX;
+      setContinuousOffset(newOffset);
+      setRulerOffset(newOffset);
+
+      // Update discrete hour offset for the parent component
+      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+      onTimeOffsetChange(newHourOffset);
+
+      setLastPointerX(e.touches[0].clientX);
+      setLastMoveTime(currentTime);
+
+      e.preventDefault();
+    },
+    [
+      isDragging,
+      lastPointerX,
+      lastMoveTime,
+      continuousOffset,
+      velocity,
+      onTimeOffsetChange,
+    ]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging || !sliderRef.current) return;
+
+      const currentTime = Date.now();
+      const deltaTime = currentTime - lastMoveTime;
+      const deltaX = e.clientX - lastPointerX;
+
+      // Calculate velocity for momentum
+      if (deltaTime > 0) {
+        const currentVelocity = (deltaX / deltaTime) * 16; // Normalize to ~60fps
+        setVelocity(currentVelocity * 0.3 + velocity * 0.7); // Smooth velocity averaging
+      }
+
+      // Update continuous offset for ultra-smooth dragging
+      const newOffset = continuousOffset + deltaX;
+      setContinuousOffset(newOffset);
+      setRulerOffset(newOffset);
+
+      // Update discrete hour offset for the parent component
+      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
+      onTimeOffsetChange(newHourOffset);
+
+      setLastPointerX(e.clientX);
+      setLastMoveTime(currentTime);
+    },
+    [
+      isDragging,
+      lastPointerX,
+      lastMoveTime,
+      continuousOffset,
+      velocity,
+      onTimeOffsetChange,
+    ]
+  );
+
+  const handlePointerUp = useCallback(() => {
+    setIsDragging(false);
+    // Momentum will be handled by the animation loop
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+    // Momentum will be handled by the animation loop
+  }, []);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
@@ -122,14 +240,34 @@ export function TimeSlider({
 
   useEffect(() => {
     if (isDragging) {
+      // Add all event types for maximum compatibility
+      document.addEventListener("pointermove", handlePointerMove);
+      document.addEventListener("pointerup", handlePointerUp);
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleTouchEnd);
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+
       return () => {
+        document.removeEventListener("pointermove", handlePointerMove);
+        document.removeEventListener("pointerup", handlePointerUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
       };
     }
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [
+    isDragging,
+    handlePointerMove,
+    handlePointerUp,
+    handleTouchMove,
+    handleTouchEnd,
+    handleMouseMove,
+    handleMouseUp,
+  ]);
 
   // Generate ruler lines with infinite scroll (each line = 1 hour)
   const generateRulerLines = () => {
@@ -199,7 +337,12 @@ export function TimeSlider({
             cursor: isDragging ? "grabbing" : "grab",
             userSelect: "none",
             overflow: "hidden",
+            touchAction: "pan-x", // Allow horizontal panning for touch devices
+            WebkitTouchCallout: "none", // Disable iOS callout
+            WebkitUserSelect: "none", // Disable text selection on iOS
           }}
+          onPointerDown={handlePointerDown}
+          onTouchStart={handleTouchStart}
           onMouseDown={handleMouseDown}
         >
           {/* Time Range Rectangle - shows between current time and selected time */}

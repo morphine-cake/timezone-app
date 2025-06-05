@@ -139,7 +139,7 @@ export default function Home() {
 
   // Load cities from localStorage on component mount (client-side only)
   useEffect(() => {
-    if (!isClient || hasInitialized) return;
+    if (!isClient) return;
 
     const savedCities = localStorage.getItem("kairos-selected-cities");
     if (savedCities) {
@@ -166,7 +166,7 @@ export default function Home() {
     setTimeout(() => {
       setShowLoadingScreen(false);
     }, 800);
-  }, [isClient, hasInitialized]);
+  }, [isClient]);
 
   // Save cities to localStorage whenever selectedCities changes (client-side only)
   useEffect(() => {
@@ -414,10 +414,7 @@ export default function Home() {
           </div>
 
           {/* Time Slider Row */}
-          <div
-            className="time-slider-section"
-            style={{ paddingBottom: "24px" }}
-          >
+          <div className="time-slider-section">
             <TimeSlider
               onTimeOffsetChange={handleTimeOffsetChange}
               currentOffset={timeOffset}
