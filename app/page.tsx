@@ -147,18 +147,12 @@ export default function Home() {
       try {
         const parsedCities = JSON.parse(savedCities);
         if (Array.isArray(parsedCities) && parsedCities.length > 0) {
-          console.log(
-            "Loaded cities from localStorage:",
-            parsedCities.map((c) => c.name)
-          );
           setSelectedCities(parsedCities);
         }
       } catch (error) {
         console.error("Error parsing saved cities:", error);
         // Keep default cities if parsing fails
       }
-    } else {
-      console.log("No saved cities found, using defaults");
     }
 
     setHasInitialized(true);
@@ -176,10 +170,6 @@ export default function Home() {
     localStorage.setItem(
       "kairos-selected-cities",
       JSON.stringify(selectedCities)
-    );
-    console.log(
-      "Saved cities to localStorage:",
-      selectedCities.map((c) => c.name)
     );
   }, [selectedCities, isClient, hasInitialized]);
 

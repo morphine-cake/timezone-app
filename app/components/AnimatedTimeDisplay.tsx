@@ -86,35 +86,6 @@ export function AnimatedTimeDisplay({
     return time.split("");
   };
 
-  const compareDigits = (
-    oldTime: string,
-    newTime: string,
-    offsetChanged: boolean
-  ) => {
-    const oldDigits = getDigitsFromTime(oldTime);
-    const newDigits = getDigitsFromTime(newTime);
-    const prevOffset = prevOffsetRef.current;
-
-    const animating = new Array(5).fill(false);
-    const directions: ("up" | "down" | null)[] = new Array(5).fill(null);
-
-    // Only animate if offset changed (user moved the dial)
-    if (offsetChanged) {
-      const isIncreasing = timeOffset > prevOffset;
-
-      for (let i = 0; i < 5; i++) {
-        if (i === 2) continue; // Skip the colon ":"
-
-        if (oldDigits[i] !== newDigits[i]) {
-          animating[i] = true;
-          directions[i] = isIncreasing ? "up" : "down";
-        }
-      }
-    }
-
-    return { animating, directions };
-  };
-
   useEffect(() => {
     const newTime = formatTime(getAdjustedTime(timezone, timeOffset));
     const prevTime = prevTimeRef.current;
@@ -127,12 +98,22 @@ export function AnimatedTimeDisplay({
     }
 
     if (offsetChanged) {
-      // Get which digits need animation
-      const { animating, directions } = compareDigits(
-        prevTime,
-        newTime,
-        offsetChanged
-      );
+      // Compare digits for animation
+      const oldDigits = getDigitsFromTime(prevTime);
+      const newDigits = getDigitsFromTime(newTime);
+      const isIncreasing = timeOffset > prevOffset;
+
+      const animating = new Array(5).fill(false);
+      const directions: ("up" | "down" | null)[] = new Array(5).fill(null);
+
+      for (let i = 0; i < 5; i++) {
+        if (i === 2) continue; // Skip the colon ":"
+
+        if (oldDigits[i] !== newDigits[i]) {
+          animating[i] = true;
+          directions[i] = isIncreasing ? "up" : "down";
+        }
+      }
 
       // Start animation
       setAnimatingDigits(animating);
@@ -162,7 +143,7 @@ export function AnimatedTimeDisplay({
     const initialTime = formatTime(getAdjustedTime(timezone, timeOffset));
     setDisplayTime(initialTime);
     prevTimeRef.current = initialTime;
-  }, []);
+  }, [timezone, timeOffset]);
 
   // Cleanup timeout on unmount
   useEffect(() => {

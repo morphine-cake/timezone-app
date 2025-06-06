@@ -55,7 +55,7 @@ export function CitySelectionModal({
     if (isOpen && cities.length === 0) {
       fetchCities();
     }
-  }, [isOpen]);
+  }, [isOpen, cities.length]);
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
