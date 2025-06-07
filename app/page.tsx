@@ -130,7 +130,6 @@ export default function Home() {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [dropLinePosition, setDropLinePosition] = useState<number | null>(null);
   const [isClient, setIsClient] = useState(false);
-  const [hasInitialized, setHasInitialized] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   // Set client flag after component mounts
@@ -155,23 +154,23 @@ export default function Home() {
       }
     }
 
-    setHasInitialized(true);
-
-    // Set loading to false after a delay for smooth animation
-    setTimeout(() => {
+    // Show loading for 800ms, then keep for additional 500ms before hiding
+    const hideLoadingTimer = setTimeout(() => {
       setShowLoadingScreen(false);
-    }, 800);
+    }, 1300); // 800ms loading + 500ms extra = 1300ms total
+
+    return () => clearTimeout(hideLoadingTimer);
   }, [isClient]);
 
   // Save cities to localStorage whenever selectedCities changes (client-side only)
   useEffect(() => {
-    if (!isClient || !hasInitialized) return;
+    if (!isClient) return;
 
     localStorage.setItem(
       "kairos-selected-cities",
       JSON.stringify(selectedCities)
     );
-  }, [selectedCities, isClient, hasInitialized]);
+  }, [selectedCities, isClient]);
 
   // Update current time every second
   useEffect(() => {
@@ -301,30 +300,40 @@ export default function Home() {
   if (showLoadingScreen) {
     return (
       <div
-        className="loading-screen flex items-center justify-center min-h-screen"
+        className="loading-screen"
         style={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
           backgroundColor: "#121212",
-          color: "#ffffff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: "9999",
         }}
       >
-        <div className="loading-content text-center">
-          {/* Kairos Logo with Spinning Animation */}
-          <div className="loading-logo">
-            <KairosLogo />
+        <div className="loading-content">
+          {/* New Kairos Logo */}
+          <div
+            className="loading-logo"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src="/kairos-logo.png"
+              alt="Kairos"
+              style={{
+                width: "auto",
+                height: "110px",
+              }}
+            />
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes pulse {
-            0%,
-            100% {
-              opacity: 0.5;
-            }
-            50% {
-              opacity: 1;
-            }
-          }
-        `}</style>
       </div>
     );
   }
