@@ -1,0 +1,2302 @@
+{
+  "cities": [
+    {
+      "id": "new-york",
+      "name": "New York",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "singapore",
+      "name": "Singapore",
+      "country": "Singapore",
+      "timezone": "Asia/Singapore"
+    },
+    {
+      "id": "hong-kong",
+      "name": "Hong Kong",
+      "country": "Hong Kong",
+      "timezone": "Asia/Hong_Kong"
+    },
+    {
+      "id": "shanghai",
+      "name": "Shanghai",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "moscow",
+      "name": "Moscow",
+      "country": "Russia",
+      "timezone": "Europe/Moscow"
+    },
+    {
+      "id": "toronto",
+      "name": "Toronto",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "amsterdam",
+      "name": "Amsterdam",
+      "country": "Netherlands",
+      "timezone": "Europe/Amsterdam"
+    },
+    {
+      "id": "zurich",
+      "name": "Zurich",
+      "country": "Switzerland",
+      "timezone": "Europe/Zurich"
+    },
+    {
+      "id": "stockholm",
+      "name": "Stockholm",
+      "country": "Sweden",
+      "timezone": "Europe/Stockholm"
+    },
+    {
+      "id": "copenhagen",
+      "name": "Copenhagen",
+      "country": "Denmark",
+      "timezone": "Europe/Copenhagen"
+    },
+    {
+      "id": "helsinki",
+      "name": "Helsinki",
+      "country": "Finland",
+      "timezone": "Europe/Helsinki"
+    },
+    {
+      "id": "oslo",
+      "name": "Oslo",
+      "country": "Norway",
+      "timezone": "Europe/Oslo"
+    },
+    {
+      "id": "dublin",
+      "name": "Dublin",
+      "country": "Ireland",
+      "timezone": "Europe/Dublin"
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "country": "Spain",
+      "timezone": "Europe/Madrid"
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "country": "Italy",
+      "timezone": "Europe/Rome"
+    },
+    {
+      "id": "vienna",
+      "name": "Vienna",
+      "country": "Austria",
+      "timezone": "Europe/Vienna"
+    },
+    {
+      "id": "prague",
+      "name": "Prague",
+      "country": "Czech Republic",
+      "timezone": "Europe/Prague"
+    },
+    {
+      "id": "warsaw",
+      "name": "Warsaw",
+      "country": "Poland",
+      "timezone": "Europe/Warsaw"
+    },
+    {
+      "id": "budapest",
+      "name": "Budapest",
+      "country": "Hungary",
+      "timezone": "Europe/Budapest"
+    },
+    {
+      "id": "bucharest",
+      "name": "Bucharest",
+      "country": "Romania",
+      "timezone": "Europe/Bucharest"
+    },
+    {
+      "id": "athens",
+      "name": "Athens",
+      "country": "Greece",
+      "timezone": "Europe/Athens"
+    },
+    {
+      "id": "istanbul",
+      "name": "Istanbul",
+      "country": "Turkey",
+      "timezone": "Europe/Istanbul"
+    },
+    {
+      "id": "ankara",
+      "name": "Ankara",
+      "country": "Turkey",
+      "timezone": "Europe/Istanbul"
+    },
+    {
+      "id": "izmir",
+      "name": "İzmir",
+      "country": "Turkey",
+      "timezone": "Europe/Istanbul"
+    },
+    {
+      "id": "bursa",
+      "name": "Bursa",
+      "country": "Turkey",
+      "timezone": "Europe/Istanbul"
+    },
+    {
+      "id": "antalya",
+      "name": "Antalya",
+      "country": "Turkey",
+      "timezone": "Europe/Istanbul"
+    },
+    {
+      "id": "dubai",
+      "name": "Dubai",
+      "country": "United Arab Emirates",
+      "timezone": "Asia/Dubai"
+    },
+    {
+      "id": "riyadh",
+      "name": "Riyadh",
+      "country": "Saudi Arabia",
+      "timezone": "Asia/Riyadh"
+    },
+    {
+      "id": "doha",
+      "name": "Doha",
+      "country": "Qatar",
+      "timezone": "Asia/Qatar"
+    },
+    {
+      "id": "kuwait-city",
+      "name": "Kuwait City",
+      "country": "Kuwait",
+      "timezone": "Asia/Kuwait"
+    },
+    {
+      "id": "tehran",
+      "name": "Tehran",
+      "country": "Iran",
+      "timezone": "Asia/Tehran"
+    },
+    {
+      "id": "mumbai",
+      "name": "Mumbai",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "delhi",
+      "name": "Delhi",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "bangalore",
+      "name": "Bangalore",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "bengaluru",
+      "name": "Bengaluru",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "chennai",
+      "name": "Chennai",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "kolkata",
+      "name": "Kolkata",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "hyderabad",
+      "name": "Hyderabad",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "pune",
+      "name": "Pune",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "ahmedabad",
+      "name": "Ahmedabad",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "jaipur",
+      "name": "Jaipur",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "surat",
+      "name": "Surat",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "lucknow",
+      "name": "Lucknow",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "kanpur",
+      "name": "Kanpur",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "nagpur",
+      "name": "Nagpur",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "indore",
+      "name": "Indore",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "bhopal",
+      "name": "Bhopal",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "visakhapatnam",
+      "name": "Visakhapatnam",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "vadodara",
+      "name": "Vadodara",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "coimbatore",
+      "name": "Coimbatore",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "agra",
+      "name": "Agra",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "madurai",
+      "name": "Madurai",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "nashik",
+      "name": "Nashik",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "rajkot",
+      "name": "Rajkot",
+      "country": "India",
+      "timezone": "Asia/Kolkata"
+    },
+    {
+      "id": "karachi",
+      "name": "Karachi",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "lahore",
+      "name": "Lahore",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "dhaka",
+      "name": "Dhaka",
+      "country": "Bangladesh",
+      "timezone": "Asia/Dhaka"
+    },
+    {
+      "id": "colombo",
+      "name": "Colombo",
+      "country": "Sri Lanka",
+      "timezone": "Asia/Colombo"
+    },
+    {
+      "id": "kathmandu",
+      "name": "Kathmandu",
+      "country": "Nepal",
+      "timezone": "Asia/Kathmandu"
+    },
+    {
+      "id": "bangkok",
+      "name": "Bangkok",
+      "country": "Thailand",
+      "timezone": "Asia/Bangkok"
+    },
+    {
+      "id": "ho-chi-minh-city",
+      "name": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "timezone": "Asia/Ho_Chi_Minh"
+    },
+    {
+      "id": "hanoi",
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "timezone": "Asia/Ho_Chi_Minh"
+    },
+    {
+      "id": "kuala-lumpur",
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuala_Lumpur"
+    },
+    {
+      "id": "jakarta",
+      "name": "Jakarta",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "manila",
+      "name": "Manila",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "seoul",
+      "name": "Seoul",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "beijing",
+      "name": "Beijing",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "guangzhou",
+      "name": "Guangzhou",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "shenzhen",
+      "name": "Shenzhen",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "taipei",
+      "name": "Taipei",
+      "country": "Taiwan",
+      "timezone": "Asia/Taipei"
+    },
+    {
+      "id": "kaohsiung",
+      "name": "Kaohsiung",
+      "country": "Taiwan",
+      "timezone": "Asia/Taipei"
+    },
+    {
+      "id": "osaka",
+      "name": "Osaka",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "kyoto",
+      "name": "Kyoto",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "yokohama",
+      "name": "Yokohama",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "nagoya",
+      "name": "Nagoya",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "sapporo",
+      "name": "Sapporo",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "fukuoka",
+      "name": "Fukuoka",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "kobe",
+      "name": "Kobe",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "id": "busan",
+      "name": "Busan",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "incheon",
+      "name": "Incheon",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "daegu",
+      "name": "Daegu",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "daejeon",
+      "name": "Daejeon",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "gwangju",
+      "name": "Gwangju",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "ulsan",
+      "name": "Ulsan",
+      "country": "South Korea",
+      "timezone": "Asia/Seoul"
+    },
+    {
+      "id": "sydney",
+      "name": "Sydney",
+      "country": "Australia",
+      "timezone": "Australia/Sydney"
+    },
+    {
+      "id": "melbourne",
+      "name": "Melbourne",
+      "country": "Australia",
+      "timezone": "Australia/Melbourne"
+    },
+    {
+      "id": "brisbane",
+      "name": "Brisbane",
+      "country": "Australia",
+      "timezone": "Australia/Brisbane"
+    },
+    {
+      "id": "perth",
+      "name": "Perth",
+      "country": "Australia",
+      "timezone": "Australia/Perth"
+    },
+    {
+      "id": "auckland",
+      "name": "Auckland",
+      "country": "New Zealand",
+      "timezone": "Pacific/Auckland"
+    },
+    {
+      "id": "wellington",
+      "name": "Wellington",
+      "country": "New Zealand",
+      "timezone": "Pacific/Auckland"
+    },
+    {
+      "id": "los-angeles",
+      "name": "Los Angeles",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "san-francisco",
+      "name": "San Francisco",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "seattle",
+      "name": "Seattle",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "chicago",
+      "name": "Chicago",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "denver",
+      "name": "Denver",
+      "country": "United States",
+      "timezone": "America/Denver"
+    },
+    {
+      "id": "phoenix",
+      "name": "Phoenix",
+      "country": "United States",
+      "timezone": "America/Phoenix"
+    },
+    {
+      "id": "dallas",
+      "name": "Dallas",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "houston",
+      "name": "Houston",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "atlanta",
+      "name": "Atlanta",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "miami",
+      "name": "Miami",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "washington-dc",
+      "name": "Washington DC",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "boston",
+      "name": "Boston",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "philadelphia",
+      "name": "Philadelphia",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "baltimore",
+      "name": "Baltimore",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "charlotte",
+      "name": "Charlotte",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "jacksonville",
+      "name": "Jacksonville",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "orlando",
+      "name": "Orlando",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "tampa",
+      "name": "Tampa",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "nashville",
+      "name": "Nashville",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "memphis",
+      "name": "Memphis",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "new-orleans",
+      "name": "New Orleans",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "austin",
+      "name": "Austin",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "san-antonio",
+      "name": "San Antonio",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "fort-worth",
+      "name": "Fort Worth",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "oklahoma-city",
+      "name": "Oklahoma City",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "kansas-city",
+      "name": "Kansas City",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "minneapolis",
+      "name": "Minneapolis",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "st-louis",
+      "name": "St. Louis",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "milwaukee",
+      "name": "Milwaukee",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "indianapolis",
+      "name": "Indianapolis",
+      "country": "United States",
+      "timezone": "America/Indiana/Indianapolis"
+    },
+    {
+      "id": "columbus",
+      "name": "Columbus",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "cleveland",
+      "name": "Cleveland",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "cincinnati",
+      "name": "Cincinnati",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "pittsburgh",
+      "name": "Pittsburgh",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "detroit",
+      "name": "Detroit",
+      "country": "United States",
+      "timezone": "America/Detroit"
+    },
+    {
+      "id": "las-vegas",
+      "name": "Las Vegas",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "reno",
+      "name": "Reno",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "salt-lake-city",
+      "name": "Salt Lake City",
+      "country": "United States",
+      "timezone": "America/Denver"
+    },
+    {
+      "id": "albuquerque",
+      "name": "Albuquerque",
+      "country": "United States",
+      "timezone": "America/Denver"
+    },
+    {
+      "id": "tucson",
+      "name": "Tucson",
+      "country": "United States",
+      "timezone": "America/Phoenix"
+    },
+    {
+      "id": "san-diego",
+      "name": "San Diego",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "sacramento",
+      "name": "Sacramento",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "fresno",
+      "name": "Fresno",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "san-jose",
+      "name": "San Jose",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "portland",
+      "name": "Portland",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "spokane",
+      "name": "Spokane",
+      "country": "United States",
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "id": "boise",
+      "name": "Boise",
+      "country": "United States",
+      "timezone": "America/Boise"
+    },
+    {
+      "id": "anchorage",
+      "name": "Anchorage",
+      "country": "United States",
+      "timezone": "America/Anchorage"
+    },
+    {
+      "id": "honolulu",
+      "name": "Honolulu",
+      "country": "United States",
+      "timezone": "Pacific/Honolulu"
+    },
+    {
+      "id": "buffalo",
+      "name": "Buffalo",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "rochester",
+      "name": "Rochester",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "albany",
+      "name": "Albany",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "richmond",
+      "name": "Richmond",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "norfolk",
+      "name": "Norfolk",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "raleigh",
+      "name": "Raleigh",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "greensboro",
+      "name": "Greensboro",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "charleston",
+      "name": "Charleston",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "columbia",
+      "name": "Columbia",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "savannah",
+      "name": "Savannah",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "birmingham-us",
+      "name": "Birmingham",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "huntsville",
+      "name": "Huntsville",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile",
+      "country": "United States",
+      "timezone": "America/Chicago"
+    },
+    {
+      "id": "louisville",
+      "name": "Louisville",
+      "country": "United States",
+      "timezone": "America/Kentucky/Louisville"
+    },
+    {
+      "id": "lexington",
+      "name": "Lexington",
+      "country": "United States",
+      "timezone": "America/Kentucky/Louisville"
+    },
+    {
+      "id": "vancouver",
+      "name": "Vancouver",
+      "country": "Canada",
+      "timezone": "America/Vancouver"
+    },
+    {
+      "id": "montreal",
+      "name": "Montreal",
+      "country": "Canada",
+      "timezone": "America/Montreal"
+    },
+    {
+      "id": "calgary",
+      "name": "Calgary",
+      "country": "Canada",
+      "timezone": "America/Edmonton"
+    },
+    {
+      "id": "edmonton",
+      "name": "Edmonton",
+      "country": "Canada",
+      "timezone": "America/Edmonton"
+    },
+    {
+      "id": "winnipeg",
+      "name": "Winnipeg",
+      "country": "Canada",
+      "timezone": "America/Winnipeg"
+    },
+    {
+      "id": "ottawa",
+      "name": "Ottawa",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "quebec-city",
+      "name": "Quebec City",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "hamilton",
+      "name": "Hamilton",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "london-canada",
+      "name": "London",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "kitchener",
+      "name": "Kitchener",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "windsor",
+      "name": "Windsor",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "halifax",
+      "name": "Halifax",
+      "country": "Canada",
+      "timezone": "America/Halifax"
+    },
+    {
+      "id": "moncton",
+      "name": "Moncton",
+      "country": "Canada",
+      "timezone": "America/Moncton"
+    },
+    {
+      "id": "saint-john",
+      "name": "Saint John",
+      "country": "Canada",
+      "timezone": "America/Moncton"
+    },
+    {
+      "id": "fredericton",
+      "name": "Fredericton",
+      "country": "Canada",
+      "timezone": "America/Moncton"
+    },
+    {
+      "id": "charlottetown",
+      "name": "Charlottetown",
+      "country": "Canada",
+      "timezone": "America/Halifax"
+    },
+    {
+      "id": "st-johns",
+      "name": "St. John's",
+      "country": "Canada",
+      "timezone": "America/St_Johns"
+    },
+    {
+      "id": "saskatoon",
+      "name": "Saskatoon",
+      "country": "Canada",
+      "timezone": "America/Regina"
+    },
+    {
+      "id": "regina",
+      "name": "Regina",
+      "country": "Canada",
+      "timezone": "America/Regina"
+    },
+    {
+      "id": "victoria",
+      "name": "Victoria",
+      "country": "Canada",
+      "timezone": "America/Vancouver"
+    },
+    {
+      "id": "kelowna",
+      "name": "Kelowna",
+      "country": "Canada",
+      "timezone": "America/Vancouver"
+    },
+    {
+      "id": "kamloops",
+      "name": "Kamloops",
+      "country": "Canada",
+      "timezone": "America/Vancouver"
+    },
+    {
+      "id": "prince-george",
+      "name": "Prince George",
+      "country": "Canada",
+      "timezone": "America/Vancouver"
+    },
+    {
+      "id": "whitehorse",
+      "name": "Whitehorse",
+      "country": "Canada",
+      "timezone": "America/Whitehorse"
+    },
+    {
+      "id": "yellowknife",
+      "name": "Yellowknife",
+      "country": "Canada",
+      "timezone": "America/Yellowknife"
+    },
+    {
+      "id": "iqaluit",
+      "name": "Iqaluit",
+      "country": "Canada",
+      "timezone": "America/Iqaluit"
+    },
+    {
+      "id": "thunder-bay",
+      "name": "Thunder Bay",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "sudbury",
+      "name": "Sudbury",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "kingston",
+      "name": "Kingston",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "oshawa",
+      "name": "Oshawa",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "barrie",
+      "name": "Barrie",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "guelph",
+      "name": "Guelph",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "brantford",
+      "name": "Brantford",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "sherbrooke",
+      "name": "Sherbrooke",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "trois-rivieres",
+      "name": "Trois-Rivières",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "saguenay",
+      "name": "Saguenay",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "gatineau",
+      "name": "Gatineau",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "laval",
+      "name": "Laval",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "longueuil",
+      "name": "Longueuil",
+      "country": "Canada",
+      "timezone": "America/Toronto"
+    },
+    {
+      "id": "mexico-city",
+      "name": "Mexico City",
+      "country": "Mexico",
+      "timezone": "America/Mexico_City"
+    },
+    {
+      "id": "guatemala-city",
+      "name": "Guatemala City",
+      "country": "Guatemala",
+      "timezone": "America/Guatemala"
+    },
+    {
+      "id": "san-jose",
+      "name": "San José",
+      "country": "Costa Rica",
+      "timezone": "America/Costa_Rica"
+    },
+    {
+      "id": "panama-city",
+      "name": "Panama City",
+      "country": "Panama",
+      "timezone": "America/Panama"
+    },
+    {
+      "id": "bogota",
+      "name": "Bogotá",
+      "country": "Colombia",
+      "timezone": "America/Bogota"
+    },
+    {
+      "id": "caracas",
+      "name": "Caracas",
+      "country": "Venezuela",
+      "timezone": "America/Caracas"
+    },
+    {
+      "id": "lima",
+      "name": "Lima",
+      "country": "Peru",
+      "timezone": "America/Lima"
+    },
+    {
+      "id": "quito",
+      "name": "Quito",
+      "country": "Ecuador",
+      "timezone": "America/Guayaquil"
+    },
+    {
+      "id": "la-paz",
+      "name": "La Paz",
+      "country": "Bolivia",
+      "timezone": "America/La_Paz"
+    },
+    {
+      "id": "santiago",
+      "name": "Santiago",
+      "country": "Chile",
+      "timezone": "America/Santiago"
+    },
+    {
+      "id": "buenos-aires",
+      "name": "Buenos Aires",
+      "country": "Argentina",
+      "timezone": "America/Argentina/Buenos_Aires"
+    },
+    {
+      "id": "montevideo",
+      "name": "Montevideo",
+      "country": "Uruguay",
+      "timezone": "America/Montevideo"
+    },
+    {
+      "id": "asuncion",
+      "name": "Asunción",
+      "country": "Paraguay",
+      "timezone": "America/Asuncion"
+    },
+    {
+      "id": "brasilia",
+      "name": "Brasília",
+      "country": "Brazil",
+      "timezone": "America/Sao_Paulo"
+    },
+    {
+      "id": "sao-paulo",
+      "name": "São Paulo",
+      "country": "Brazil",
+      "timezone": "America/Sao_Paulo"
+    },
+    {
+      "id": "rio-de-janeiro",
+      "name": "Rio de Janeiro",
+      "country": "Brazil",
+      "timezone": "America/Sao_Paulo"
+    },
+    {
+      "id": "salvador",
+      "name": "Salvador",
+      "country": "Brazil",
+      "timezone": "America/Bahia"
+    },
+    {
+      "id": "recife",
+      "name": "Recife",
+      "country": "Brazil",
+      "timezone": "America/Recife"
+    },
+    {
+      "id": "fortaleza",
+      "name": "Fortaleza",
+      "country": "Brazil",
+      "timezone": "America/Fortaleza"
+    },
+    {
+      "id": "manaus",
+      "name": "Manaus",
+      "country": "Brazil",
+      "timezone": "America/Manaus"
+    },
+    {
+      "id": "cairo",
+      "name": "Cairo",
+      "country": "Egypt",
+      "timezone": "Africa/Cairo"
+    },
+    {
+      "id": "johannesburg",
+      "name": "Johannesburg",
+      "country": "South Africa",
+      "timezone": "Africa/Johannesburg"
+    },
+    {
+      "id": "cape-town",
+      "name": "Cape Town",
+      "country": "South Africa",
+      "timezone": "Africa/Johannesburg"
+    },
+    {
+      "id": "lagos",
+      "name": "Lagos",
+      "country": "Nigeria",
+      "timezone": "Africa/Lagos"
+    },
+    {
+      "id": "abuja",
+      "name": "Abuja",
+      "country": "Nigeria",
+      "timezone": "Africa/Lagos"
+    },
+    {
+      "id": "nairobi",
+      "name": "Nairobi",
+      "country": "Kenya",
+      "timezone": "Africa/Nairobi"
+    },
+    {
+      "id": "addis-ababa",
+      "name": "Addis Ababa",
+      "country": "Ethiopia",
+      "timezone": "Africa/Addis_Ababa"
+    },
+    {
+      "id": "accra",
+      "name": "Accra",
+      "country": "Ghana",
+      "timezone": "Africa/Accra"
+    },
+    {
+      "id": "dakar",
+      "name": "Dakar",
+      "country": "Senegal",
+      "timezone": "Africa/Dakar"
+    },
+    {
+      "id": "casablanca",
+      "name": "Casablanca",
+      "country": "Morocco",
+      "timezone": "Africa/Casablanca"
+    },
+    {
+      "id": "tunis",
+      "name": "Tunis",
+      "country": "Tunisia",
+      "timezone": "Africa/Tunis"
+    },
+    {
+      "id": "algiers",
+      "name": "Algiers",
+      "country": "Algeria",
+      "timezone": "Africa/Algiers"
+    },
+    {
+      "id": "kinshasa",
+      "name": "Kinshasa",
+      "country": "Democratic Republic of Congo",
+      "timezone": "Africa/Kinshasa"
+    },
+    {
+      "id": "luanda",
+      "name": "Luanda",
+      "country": "Angola",
+      "timezone": "Africa/Luanda"
+    },
+    {
+      "id": "khartoum",
+      "name": "Khartoum",
+      "country": "Sudan",
+      "timezone": "Africa/Khartoum"
+    },
+    {
+      "id": "dar-es-salaam",
+      "name": "Dar es Salaam",
+      "country": "Tanzania",
+      "timezone": "Africa/Dar_es_Salaam"
+    },
+    {
+      "id": "kampala",
+      "name": "Kampala",
+      "country": "Uganda",
+      "timezone": "Africa/Kampala"
+    },
+    {
+      "id": "harare",
+      "name": "Harare",
+      "country": "Zimbabwe",
+      "timezone": "Africa/Harare"
+    },
+    {
+      "id": "lusaka",
+      "name": "Lusaka",
+      "country": "Zambia",
+      "timezone": "Africa/Lusaka"
+    },
+    {
+      "id": "maputo",
+      "name": "Maputo",
+      "country": "Mozambique",
+      "timezone": "Africa/Maputo"
+    },
+    {
+      "id": "antananarivo",
+      "name": "Antananarivo",
+      "country": "Madagascar",
+      "timezone": "Indian/Antananarivo"
+    },
+    {
+      "id": "kigali",
+      "name": "Kigali",
+      "country": "Rwanda",
+      "timezone": "Africa/Kigali"
+    },
+    {
+      "id": "bujumbura",
+      "name": "Bujumbura",
+      "country": "Burundi",
+      "timezone": "Africa/Bujumbura"
+    },
+    {
+      "id": "tel-aviv",
+      "name": "Tel Aviv",
+      "country": "Israel",
+      "timezone": "Asia/Jerusalem"
+    },
+    {
+      "id": "jerusalem",
+      "name": "Jerusalem",
+      "country": "Israel",
+      "timezone": "Asia/Jerusalem"
+    },
+    {
+      "id": "haifa",
+      "name": "Haifa",
+      "country": "Israel",
+      "timezone": "Asia/Jerusalem"
+    },
+    {
+      "id": "amman",
+      "name": "Amman",
+      "country": "Jordan",
+      "timezone": "Asia/Amman"
+    },
+    {
+      "id": "beirut",
+      "name": "Beirut",
+      "country": "Lebanon",
+      "timezone": "Asia/Beirut"
+    },
+    {
+      "id": "damascus",
+      "name": "Damascus",
+      "country": "Syria",
+      "timezone": "Asia/Damascus"
+    },
+    {
+      "id": "baghdad",
+      "name": "Baghdad",
+      "country": "Iraq",
+      "timezone": "Asia/Baghdad"
+    },
+    {
+      "id": "muscat",
+      "name": "Muscat",
+      "country": "Oman",
+      "timezone": "Asia/Muscat"
+    },
+    {
+      "id": "manama",
+      "name": "Manama",
+      "country": "Bahrain",
+      "timezone": "Asia/Bahrain"
+    },
+    {
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi",
+      "country": "United Arab Emirates",
+      "timezone": "Asia/Dubai"
+    },
+    {
+      "id": "sharjah",
+      "name": "Sharjah",
+      "country": "United Arab Emirates",
+      "timezone": "Asia/Dubai"
+    },
+    {
+      "id": "jeddah",
+      "name": "Jeddah",
+      "country": "Saudi Arabia",
+      "timezone": "Asia/Riyadh"
+    },
+    {
+      "id": "mecca",
+      "name": "Mecca",
+      "country": "Saudi Arabia",
+      "timezone": "Asia/Riyadh"
+    },
+    {
+      "id": "medina",
+      "name": "Medina",
+      "country": "Saudi Arabia",
+      "timezone": "Asia/Riyadh"
+    },
+    {
+      "id": "dammam",
+      "name": "Dammam",
+      "country": "Saudi Arabia",
+      "timezone": "Asia/Riyadh"
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "country": "Germany",
+      "timezone": "Europe/Berlin"
+    },
+    {
+      "id": "munich",
+      "name": "Munich",
+      "country": "Germany",
+      "timezone": "Europe/Berlin"
+    },
+    {
+      "id": "hamburg",
+      "name": "Hamburg",
+      "country": "Germany",
+      "timezone": "Europe/Berlin"
+    },
+    {
+      "id": "frankfurt",
+      "name": "Frankfurt",
+      "country": "Germany",
+      "timezone": "Europe/Berlin"
+    },
+    {
+      "id": "milan",
+      "name": "Milan",
+      "country": "Italy",
+      "timezone": "Europe/Rome"
+    },
+    {
+      "id": "naples",
+      "name": "Naples",
+      "country": "Italy",
+      "timezone": "Europe/Rome"
+    },
+    {
+      "id": "barcelona",
+      "name": "Barcelona",
+      "country": "Spain",
+      "timezone": "Europe/Madrid"
+    },
+    {
+      "id": "valencia",
+      "name": "Valencia",
+      "country": "Spain",
+      "timezone": "Europe/Madrid"
+    },
+    {
+      "id": "seville",
+      "name": "Seville",
+      "country": "Spain",
+      "timezone": "Europe/Madrid"
+    },
+    {
+      "id": "lisbon",
+      "name": "Lisbon",
+      "country": "Portugal",
+      "timezone": "Europe/Lisbon"
+    },
+    {
+      "id": "porto",
+      "name": "Porto",
+      "country": "Portugal",
+      "timezone": "Europe/Lisbon"
+    },
+    {
+      "id": "brussels",
+      "name": "Brussels",
+      "country": "Belgium",
+      "timezone": "Europe/Brussels"
+    },
+    {
+      "id": "antwerp",
+      "name": "Antwerp",
+      "country": "Belgium",
+      "timezone": "Europe/Brussels"
+    },
+    {
+      "id": "luxembourg",
+      "name": "Luxembourg",
+      "country": "Luxembourg",
+      "timezone": "Europe/Luxembourg"
+    },
+    {
+      "id": "geneva",
+      "name": "Geneva",
+      "country": "Switzerland",
+      "timezone": "Europe/Zurich"
+    },
+    {
+      "id": "basel",
+      "name": "Basel",
+      "country": "Switzerland",
+      "timezone": "Europe/Zurich"
+    },
+    {
+      "id": "bern",
+      "name": "Bern",
+      "country": "Switzerland",
+      "timezone": "Europe/Zurich"
+    },
+    {
+      "id": "salzburg",
+      "name": "Salzburg",
+      "country": "Austria",
+      "timezone": "Europe/Vienna"
+    },
+    {
+      "id": "graz",
+      "name": "Graz",
+      "country": "Austria",
+      "timezone": "Europe/Vienna"
+    },
+    {
+      "id": "brno",
+      "name": "Brno",
+      "country": "Czech Republic",
+      "timezone": "Europe/Prague"
+    },
+    {
+      "id": "bratislava",
+      "name": "Bratislava",
+      "country": "Slovakia",
+      "timezone": "Europe/Bratislava"
+    },
+    {
+      "id": "ljubljana",
+      "name": "Ljubljana",
+      "country": "Slovenia",
+      "timezone": "Europe/Ljubljana"
+    },
+    {
+      "id": "zagreb",
+      "name": "Zagreb",
+      "country": "Croatia",
+      "timezone": "Europe/Zagreb"
+    },
+    {
+      "id": "belgrade",
+      "name": "Belgrade",
+      "country": "Serbia",
+      "timezone": "Europe/Belgrade"
+    },
+    {
+      "id": "sarajevo",
+      "name": "Sarajevo",
+      "country": "Bosnia and Herzegovina",
+      "timezone": "Europe/Sarajevo"
+    },
+    {
+      "id": "skopje",
+      "name": "Skopje",
+      "country": "North Macedonia",
+      "timezone": "Europe/Skopje"
+    },
+    {
+      "id": "tirana",
+      "name": "Tirana",
+      "country": "Albania",
+      "timezone": "Europe/Tirane"
+    },
+    {
+      "id": "podgorica",
+      "name": "Podgorica",
+      "country": "Montenegro",
+      "timezone": "Europe/Podgorica"
+    },
+    {
+      "id": "pristina",
+      "name": "Pristina",
+      "country": "Kosovo",
+      "timezone": "Europe/Belgrade"
+    },
+    {
+      "id": "sofia",
+      "name": "Sofia",
+      "country": "Bulgaria",
+      "timezone": "Europe/Sofia"
+    },
+    {
+      "id": "chisinau",
+      "name": "Chisinau",
+      "country": "Moldova",
+      "timezone": "Europe/Chisinau"
+    },
+    {
+      "id": "kyiv",
+      "name": "Kyiv",
+      "country": "Ukraine",
+      "timezone": "Europe/Kyiv"
+    },
+    {
+      "id": "kharkiv",
+      "name": "Kharkiv",
+      "country": "Ukraine",
+      "timezone": "Europe/Kyiv"
+    },
+    {
+      "id": "odesa",
+      "name": "Odesa",
+      "country": "Ukraine",
+      "timezone": "Europe/Kyiv"
+    },
+    {
+      "id": "minsk",
+      "name": "Minsk",
+      "country": "Belarus",
+      "timezone": "Europe/Minsk"
+    },
+    {
+      "id": "vilnius",
+      "name": "Vilnius",
+      "country": "Lithuania",
+      "timezone": "Europe/Vilnius"
+    },
+    {
+      "id": "riga",
+      "name": "Riga",
+      "country": "Latvia",
+      "timezone": "Europe/Riga"
+    },
+    {
+      "id": "tallinn",
+      "name": "Tallinn",
+      "country": "Estonia",
+      "timezone": "Europe/Tallinn"
+    },
+    {
+      "id": "st-petersburg",
+      "name": "St. Petersburg",
+      "country": "Russia",
+      "timezone": "Europe/Moscow"
+    },
+    {
+      "id": "novosibirsk",
+      "name": "Novosibirsk",
+      "country": "Russia",
+      "timezone": "Asia/Novosibirsk"
+    },
+    {
+      "id": "yekaterinburg",
+      "name": "Yekaterinburg",
+      "country": "Russia",
+      "timezone": "Asia/Yekaterinburg"
+    },
+    {
+      "id": "vladivostok",
+      "name": "Vladivostok",
+      "country": "Russia",
+      "timezone": "Asia/Vladivostok"
+    },
+    {
+      "id": "almaty",
+      "name": "Almaty",
+      "country": "Kazakhstan",
+      "timezone": "Asia/Almaty"
+    },
+    {
+      "id": "nur-sultan",
+      "name": "Nur-Sultan",
+      "country": "Kazakhstan",
+      "timezone": "Asia/Almaty"
+    },
+    {
+      "id": "tashkent",
+      "name": "Tashkent",
+      "country": "Uzbekistan",
+      "timezone": "Asia/Tashkent"
+    },
+    {
+      "id": "bishkek",
+      "name": "Bishkek",
+      "country": "Kyrgyzstan",
+      "timezone": "Asia/Bishkek"
+    },
+    {
+      "id": "dushanbe",
+      "name": "Dushanbe",
+      "country": "Tajikistan",
+      "timezone": "Asia/Dushanbe"
+    },
+    {
+      "id": "ashgabat",
+      "name": "Ashgabat",
+      "country": "Turkmenistan",
+      "timezone": "Asia/Ashgabat"
+    },
+    {
+      "id": "tbilisi",
+      "name": "Tbilisi",
+      "country": "Georgia",
+      "timezone": "Asia/Tbilisi"
+    },
+    {
+      "id": "yerevan",
+      "name": "Yerevan",
+      "country": "Armenia",
+      "timezone": "Asia/Yerevan"
+    },
+    {
+      "id": "baku",
+      "name": "Baku",
+      "country": "Azerbaijan",
+      "timezone": "Asia/Baku"
+    },
+    {
+      "id": "kabul",
+      "name": "Kabul",
+      "country": "Afghanistan",
+      "timezone": "Asia/Kabul"
+    },
+    {
+      "id": "islamabad",
+      "name": "Islamabad",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "rawalpindi",
+      "name": "Rawalpindi",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "faisalabad",
+      "name": "Faisalabad",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "peshawar",
+      "name": "Peshawar",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "quetta",
+      "name": "Quetta",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "multan",
+      "name": "Multan",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "hyderabad-pk",
+      "name": "Hyderabad",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "gujranwala",
+      "name": "Gujranwala",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "sialkot",
+      "name": "Sialkot",
+      "country": "Pakistan",
+      "timezone": "Asia/Karachi"
+    },
+    {
+      "id": "reykjavik",
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "timezone": "Atlantic/Reykjavik"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "manchester",
+      "name": "Manchester",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "birmingham",
+      "name": "Birmingham",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "glasgow",
+      "name": "Glasgow",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "liverpool",
+      "name": "Liverpool",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "leeds",
+      "name": "Leeds",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "cardiff",
+      "name": "Cardiff",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "belfast",
+      "name": "Belfast",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "id": "marseille",
+      "name": "Marseille",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "lyon",
+      "name": "Lyon",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "toulouse",
+      "name": "Toulouse",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "nice",
+      "name": "Nice",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "nantes",
+      "name": "Nantes",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "strasbourg",
+      "name": "Strasbourg",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "montpellier",
+      "name": "Montpellier",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "bordeaux",
+      "name": "Bordeaux",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "lille",
+      "name": "Lille",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "rennes",
+      "name": "Rennes",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": "gothenburg",
+      "name": "Gothenburg",
+      "country": "Sweden",
+      "timezone": "Europe/Stockholm"
+    },
+    {
+      "id": "malmo",
+      "name": "Malmö",
+      "country": "Sweden",
+      "timezone": "Europe/Stockholm"
+    },
+    {
+      "id": "aarhus",
+      "name": "Aarhus",
+      "country": "Denmark",
+      "timezone": "Europe/Copenhagen"
+    },
+    {
+      "id": "odense",
+      "name": "Odense",
+      "country": "Denmark",
+      "timezone": "Europe/Copenhagen"
+    },
+    {
+      "id": "bergen",
+      "name": "Bergen",
+      "country": "Norway",
+      "timezone": "Europe/Oslo"
+    },
+    {
+      "id": "trondheim",
+      "name": "Trondheim",
+      "country": "Norway",
+      "timezone": "Europe/Oslo"
+    },
+    {
+      "id": "stavanger",
+      "name": "Stavanger",
+      "country": "Norway",
+      "timezone": "Europe/Oslo"
+    },
+    {
+      "id": "tampere",
+      "name": "Tampere",
+      "country": "Finland",
+      "timezone": "Europe/Helsinki"
+    },
+    {
+      "id": "turku",
+      "name": "Turku",
+      "country": "Finland",
+      "timezone": "Europe/Helsinki"
+    },
+    {
+      "id": "espoo",
+      "name": "Espoo",
+      "country": "Finland",
+      "timezone": "Europe/Helsinki"
+    },
+    {
+      "id": "cork",
+      "name": "Cork",
+      "country": "Ireland",
+      "timezone": "Europe/Dublin"
+    },
+    {
+      "id": "galway",
+      "name": "Galway",
+      "country": "Ireland",
+      "timezone": "Europe/Dublin"
+    },
+    {
+      "id": "limerick",
+      "name": "Limerick",
+      "country": "Ireland",
+      "timezone": "Europe/Dublin"
+    },
+    {
+      "id": "waterford",
+      "name": "Waterford",
+      "country": "Ireland",
+      "timezone": "Europe/Dublin"
+    },
+    {
+      "id": "penang",
+      "name": "Penang",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuala_Lumpur"
+    },
+    {
+      "id": "johor-bahru",
+      "name": "Johor Bahru",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuala_Lumpur"
+    },
+    {
+      "id": "ipoh",
+      "name": "Ipoh",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuala_Lumpur"
+    },
+    {
+      "id": "kuching",
+      "name": "Kuching",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuching"
+    },
+    {
+      "id": "kota-kinabalu",
+      "name": "Kota Kinabalu",
+      "country": "Malaysia",
+      "timezone": "Asia/Kuching"
+    },
+    {
+      "id": "surabaya",
+      "name": "Surabaya",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "bandung",
+      "name": "Bandung",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "medan",
+      "name": "Medan",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "semarang",
+      "name": "Semarang",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "palembang",
+      "name": "Palembang",
+      "country": "Indonesia",
+      "timezone": "Asia/Jakarta"
+    },
+    {
+      "id": "makassar",
+      "name": "Makassar",
+      "country": "Indonesia",
+      "timezone": "Asia/Makassar"
+    },
+    {
+      "id": "denpasar",
+      "name": "Denpasar",
+      "country": "Indonesia",
+      "timezone": "Asia/Makassar"
+    },
+    {
+      "id": "cebu-city",
+      "name": "Cebu City",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "davao-city",
+      "name": "Davao City",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "zamboanga-city",
+      "name": "Zamboanga City",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "cagayan-de-oro",
+      "name": "Cagayan de Oro",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "bacolod",
+      "name": "Bacolod",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "iloilo-city",
+      "name": "Iloilo City",
+      "country": "Philippines",
+      "timezone": "Asia/Manila"
+    },
+    {
+      "id": "chiang-mai",
+      "name": "Chiang Mai",
+      "country": "Thailand",
+      "timezone": "Asia/Bangkok"
+    },
+    {
+      "id": "phuket",
+      "name": "Phuket",
+      "country": "Thailand",
+      "timezone": "Asia/Bangkok"
+    },
+    {
+      "id": "pattaya",
+      "name": "Pattaya",
+      "country": "Thailand",
+      "timezone": "Asia/Bangkok"
+    },
+    {
+      "id": "hat-yai",
+      "name": "Hat Yai",
+      "country": "Thailand",
+      "timezone": "Asia/Bangkok"
+    },
+    {
+      "id": "vientiane",
+      "name": "Vientiane",
+      "country": "Laos",
+      "timezone": "Asia/Vientiane"
+    },
+    {
+      "id": "phnom-penh",
+      "name": "Phnom Penh",
+      "country": "Cambodia",
+      "timezone": "Asia/Phnom_Penh"
+    },
+    {
+      "id": "siem-reap",
+      "name": "Siem Reap",
+      "country": "Cambodia",
+      "timezone": "Asia/Phnom_Penh"
+    },
+    {
+      "id": "yangon",
+      "name": "Yangon",
+      "country": "Myanmar",
+      "timezone": "Asia/Yangon"
+    },
+    {
+      "id": "mandalay",
+      "name": "Mandalay",
+      "country": "Myanmar",
+      "timezone": "Asia/Yangon"
+    },
+    {
+      "id": "bandar-seri-begawan",
+      "name": "Bandar Seri Begawan",
+      "country": "Brunei",
+      "timezone": "Asia/Brunei"
+    },
+    {
+      "id": "port-moresby",
+      "name": "Port Moresby",
+      "country": "Papua New Guinea",
+      "timezone": "Pacific/Port_Moresby"
+    },
+    {
+      "id": "suva",
+      "name": "Suva",
+      "country": "Fiji",
+      "timezone": "Pacific/Fiji"
+    },
+    {
+      "id": "nadi",
+      "name": "Nadi",
+      "country": "Fiji",
+      "timezone": "Pacific/Fiji"
+    },
+    {
+      "id": "noumea",
+      "name": "Nouméa",
+      "country": "New Caledonia",
+      "timezone": "Pacific/Noumea"
+    },
+    {
+      "id": "papeete",
+      "name": "Papeete",
+      "country": "French Polynesia",
+      "timezone": "Pacific/Tahiti"
+    },
+    {
+      "id": "apia",
+      "name": "Apia",
+      "country": "Samoa",
+      "timezone": "Pacific/Apia"
+    },
+    {
+      "id": "nuku-alofa",
+      "name": "Nuku'alofa",
+      "country": "Tonga",
+      "timezone": "Pacific/Tongatapu"
+    }
+  ]
+} 
