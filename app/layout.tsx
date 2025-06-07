@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "Kairos",
     images: [
       {
-        url: "/social-preview.png",
+        url: "https://kairos-timezone.netlify.app/social-preview.png",
         width: 1200,
         height: 630,
         alt: "Kairos - Smart World Clock & Timezone Converter",
@@ -61,7 +61,8 @@ export const metadata: Metadata = {
     title: "Kairos – Smart World Clock & Timezone Converter",
     description:
       "Easily compare timezones, track current times in cities worldwide, and plan meetings smarter with Kairos – your sleek, modern timezone companion.",
-    images: ["/social-preview.png"],
+    images: ["https://kairos-timezone.netlify.app/social-preview.png"],
+    site: "@kairos",
     creator: "@kairos",
   },
   robots: {
