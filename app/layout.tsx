@@ -51,6 +51,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Kairos - Smart World Clock & Timezone Converter",
+        type: "image/png",
       },
     ],
     locale: "en_US",

@@ -14,16 +14,20 @@ export function TimeSlider({
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [rulerOffset, setRulerOffset] = useState(0);
-  const [continuousOffset, setContinuousOffset] = useState(0); // For smooth continuous dragging
-  const [velocity, setVelocity] = useState(0); // For momentum effects
+  const [continuousOffset, setContinuousOffset] = useState(0);
   const [lastPointerX, setLastPointerX] = useState(0);
   const [lastMoveTime, setLastMoveTime] = useState(0);
-  const animationFrameRef = useRef<number | null>(null);
+
+  // Double-click/tap state management
+  const [lastTapTime, setLastTapTime] = useState(0);
+  const [tapTimeout, setTapTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [isAnimatingToCenter, setIsAnimatingToCenter] = useState(false);
+  const stepAnimationRef = useRef<NodeJS.Timeout | null>(null);
 
   const HOUR_WIDTH = 8; // Width per hour (each line = 1 hour, 8px spacing)
   const VISIBLE_LINES = 200; // Number of hours to render (enough for smooth infinite scroll)
-  const MOMENTUM_DECAY = 0.95; // How quickly momentum decays
-  const MIN_VELOCITY = 0.1; // Minimum velocity before stopping momentum
+  const DOUBLE_TAP_DELAY = 300; // ms for double tap detection
+  const TOTAL_ANIMATION_DURATION = 460; // ms for the entire countdown animation
 
   useEffect(() => {
     // Set ruler offset based on current time offset
@@ -33,40 +37,85 @@ export function TimeSlider({
     setContinuousOffset(targetOffset);
   }, [currentOffset]);
 
-  // Smooth momentum animation
-  const animateMomentum = useCallback(() => {
-    if (Math.abs(velocity) < MIN_VELOCITY) {
-      setVelocity(0);
-      return;
+  // Double-click/tap handler
+  const handleDoubleClick = useCallback(() => {
+    if (currentOffset === 0) return; // Already at current time
+
+    // Stop any existing animations
+    setIsDragging(false);
+    if (stepAnimationRef.current) {
+      clearTimeout(stepAnimationRef.current);
     }
 
-    const newOffset = continuousOffset + velocity;
-    setContinuousOffset(newOffset);
-    setRulerOffset(newOffset);
+    // Start step-by-step animation to center
+    setIsAnimatingToCenter(true);
 
-    // Update discrete hour offset
-    // Drag left = positive hours (future), drag right = negative hours (past)
-    const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
-    onTimeOffsetChange(newHourOffset);
+    // Calculate delay per step for consistent 460ms total duration
+    const totalSteps = Math.abs(currentOffset);
+    const stepDelay =
+      totalSteps > 1
+        ? TOTAL_ANIMATION_DURATION / totalSteps
+        : TOTAL_ANIMATION_DURATION;
 
-    // Apply decay
-    const newVelocity = velocity * MOMENTUM_DECAY;
-    setVelocity(newVelocity);
+    // Determine direction (positive means count down, negative means count up)
+    const direction = currentOffset > 0 ? -1 : 1;
+    let stepOffset = currentOffset;
 
-    animationFrameRef.current = requestAnimationFrame(animateMomentum);
-  }, [velocity, continuousOffset, onTimeOffsetChange]);
+    const animateStep = () => {
+      // Move one step toward zero
+      stepOffset += direction;
 
-  useEffect(() => {
-    if (!isDragging && Math.abs(velocity) > MIN_VELOCITY) {
-      animationFrameRef.current = requestAnimationFrame(animateMomentum);
-    }
+      // Update the visual position
+      const targetRulerOffset = -stepOffset * HOUR_WIDTH;
+      setContinuousOffset(targetRulerOffset);
+      setRulerOffset(targetRulerOffset);
+      onTimeOffsetChange(stepOffset);
 
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      // Check if we've reached current time (0)
+      if (stepOffset === 0) {
+        setIsAnimatingToCenter(false);
+        return;
       }
+
+      // Continue to next step
+      stepAnimationRef.current = setTimeout(animateStep, stepDelay);
     };
-  }, [isDragging, velocity, animateMomentum]);
+
+    // Start the step animation
+    animateStep();
+  }, [currentOffset, onTimeOffsetChange]);
+
+  // Handle double tap for touch devices
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      const currentTime = Date.now();
+
+      // Check for double tap
+      if (currentTime - lastTapTime < DOUBLE_TAP_DELAY) {
+        // Clear any existing timeout
+        if (tapTimeout) {
+          clearTimeout(tapTimeout);
+          setTapTimeout(null);
+        }
+
+        // Handle double tap
+        handleDoubleClick();
+        setLastTapTime(0); // Reset to prevent triple tap
+        return;
+      }
+
+      setLastTapTime(currentTime);
+
+      // Set timeout to clear the tap state
+      const timeout = setTimeout(() => {
+        setLastTapTime(0);
+        setTapTimeout(null);
+      }, DOUBLE_TAP_DELAY);
+      setTapTimeout(timeout);
+
+      handleStart(e.touches[0].clientX, e);
+    }
+  };
 
   // Unified start handler for all input types
   const handleStart = (
@@ -74,24 +123,12 @@ export function TimeSlider({
     event: React.TouchEvent | React.PointerEvent | React.MouseEvent
   ) => {
     setIsDragging(true);
-    setVelocity(0); // Stop any momentum
     setLastPointerX(clientX);
     setLastMoveTime(Date.now());
-
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
 
     // Only prevent default for non-touch events to avoid scroll issues
     if (event.type !== "touchstart") {
       event.preventDefault();
-    }
-  };
-
-  // Touch-specific start handler
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      handleStart(e.touches[0].clientX, e);
     }
   };
 
@@ -115,14 +152,7 @@ export function TimeSlider({
       if (!isDragging || !sliderRef.current) return;
 
       const currentTime = Date.now();
-      const deltaTime = currentTime - lastMoveTime;
       const deltaX = e.clientX - lastPointerX;
-
-      // Calculate velocity for momentum
-      if (deltaTime > 0) {
-        const currentVelocity = (deltaX / deltaTime) * 16; // Normalize to ~60fps
-        setVelocity(currentVelocity * 0.3 + velocity * 0.7); // Smooth velocity averaging
-      }
 
       // Update continuous offset for ultra-smooth dragging
       const newOffset = continuousOffset + deltaX;
@@ -142,7 +172,6 @@ export function TimeSlider({
       lastPointerX,
       lastMoveTime,
       continuousOffset,
-      velocity,
       onTimeOffsetChange,
     ]
   );
@@ -152,14 +181,7 @@ export function TimeSlider({
       if (!isDragging || !sliderRef.current || e.touches.length !== 1) return;
 
       const currentTime = Date.now();
-      const deltaTime = currentTime - lastMoveTime;
       const deltaX = e.touches[0].clientX - lastPointerX;
-
-      // Calculate velocity for momentum
-      if (deltaTime > 0) {
-        const currentVelocity = (deltaX / deltaTime) * 16; // Normalize to ~60fps
-        setVelocity(currentVelocity * 0.3 + velocity * 0.7); // Smooth velocity averaging
-      }
 
       // Update continuous offset for ultra-smooth dragging
       const newOffset = continuousOffset + deltaX;
@@ -182,7 +204,6 @@ export function TimeSlider({
       lastPointerX,
       lastMoveTime,
       continuousOffset,
-      velocity,
       onTimeOffsetChange,
     ]
   );
@@ -192,14 +213,7 @@ export function TimeSlider({
       if (!isDragging || !sliderRef.current) return;
 
       const currentTime = Date.now();
-      const deltaTime = currentTime - lastMoveTime;
       const deltaX = e.clientX - lastPointerX;
-
-      // Calculate velocity for momentum
-      if (deltaTime > 0) {
-        const currentVelocity = (deltaX / deltaTime) * 16; // Normalize to ~60fps
-        setVelocity(currentVelocity * 0.3 + velocity * 0.7); // Smooth velocity averaging
-      }
 
       // Update continuous offset for ultra-smooth dragging
       const newOffset = continuousOffset + deltaX;
@@ -219,24 +233,20 @@ export function TimeSlider({
       lastPointerX,
       lastMoveTime,
       continuousOffset,
-      velocity,
       onTimeOffsetChange,
     ]
   );
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
-    // Momentum will be handled by the animation loop
   }, []);
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-    // Momentum will be handled by the animation loop
   }, []);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-    // Momentum will be handled by the animation loop
   }, []);
 
   useEffect(() => {
@@ -275,6 +285,14 @@ export function TimeSlider({
     handleMouseMove,
     handleMouseUp,
   ]);
+
+  // Calculate smooth positioning values for visual elements
+  // Use rulerOffset during dragging or step animation for smooth alignment with ruler lines
+  // Use currentOffset when not dragging for discrete behavior
+  const visualOffset =
+    isDragging || isAnimatingToCenter
+      ? -rulerOffset / HOUR_WIDTH
+      : currentOffset;
 
   // Generate ruler lines with infinite scroll (each line = 1 hour)
   const generateRulerLines = () => {
@@ -318,6 +336,18 @@ export function TimeSlider({
     return lines;
   };
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (tapTimeout) {
+        clearTimeout(tapTimeout);
+      }
+      if (stepAnimationRef.current) {
+        clearTimeout(stepAnimationRef.current);
+      }
+    };
+  }, [tapTimeout]);
+
   return (
     <div
       className="time-slider-container"
@@ -353,21 +383,26 @@ export function TimeSlider({
           onTouchStart={handleTouchStart}
           onPointerDown={handlePointerDown}
           onMouseDown={handleMouseDown}
+          onDoubleClick={handleDoubleClick}
         >
           {/* Time Range Rectangle - shows between current time and selected time */}
-          {currentOffset !== 0 && (
+          {visualOffset !== 0 && (
             <div
               className="time-range-rectangle"
               style={{
                 position: "absolute",
                 left:
-                  currentOffset > 0
-                    ? `calc(50% + ${-currentOffset * HOUR_WIDTH}px)`
+                  visualOffset > 0
+                    ? `calc(50% + ${-visualOffset * HOUR_WIDTH}px)`
                     : "50%",
-                width: `${Math.abs(currentOffset * HOUR_WIDTH)}px`,
+                width: `${Math.abs(visualOffset * HOUR_WIDTH)}px`,
                 height: "100%",
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
                 zIndex: 1,
+                transition:
+                  isDragging || isAnimatingToCenter
+                    ? "none"
+                    : "left 0.4s linear, width 0.4s linear", // No transition during dragging or step animation for smooth alignment
               }}
             />
           )}
@@ -382,12 +417,11 @@ export function TimeSlider({
               alignItems: "flex-end",
               transform: `translateX(${rulerOffset}px)`,
               width: `${VISIBLE_LINES * HOUR_WIDTH}px`,
-              // Remove transition during dragging for immediate response
-              // Only use transition when not dragging and no momentum
+              // Use linear transition for stepped feel, disable during dragging or step animation for immediate response
               transition:
-                isDragging || Math.abs(velocity) > MIN_VELOCITY
+                isDragging || isAnimatingToCenter
                   ? "none"
-                  : "transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)",
+                  : "transform 0.4s linear",
               willChange: "transform", // Optimize for animations
             }}
           >
@@ -441,7 +475,7 @@ export function TimeSlider({
             left: "50%",
             bottom: "-12px", // Position below the dial
             transform: `translateX(calc(-50% + ${
-              -currentOffset * HOUR_WIDTH
+              -visualOffset * HOUR_WIDTH
             }px))`,
             width: "0",
             height: "0",
@@ -449,6 +483,10 @@ export function TimeSlider({
             borderRight: "6px solid transparent",
             borderBottom: "8px solid #FF7C35",
             zIndex: 11,
+            transition:
+              isDragging || isAnimatingToCenter
+                ? "none"
+                : "transform 0.4s linear", // No transition during dragging or step animation for smooth alignment
           }}
         />
       </div>
