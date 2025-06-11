@@ -406,12 +406,13 @@ export default function Home() {
             <Image
               src="/kairos-logo.png"
               alt="Kairos"
-              width={139}
-              height={34}
+              width={318}
+              height={78}
               style={{
                 width: "auto",
                 height: "110px",
               }}
+              priority
             />
           </div>
         </div>
