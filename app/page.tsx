@@ -2,7 +2,8 @@
 
 import { MapPinIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DateTime } from "luxon";
-import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import React, { useCallback, useEffect, useState } from "react";
 import { AnimatedTimeDisplay } from "./components/AnimatedTimeDisplay";
 import { CitySelectionModal } from "./components/CitySelectionModal";
 import { Footer } from "./components/Footer";
@@ -81,49 +82,109 @@ export default function Home() {
   // Layout constants
   const MAX_WIDTH = "560px";
 
-  // Default cities if localStorage is empty
-  const defaultCities: City[] = [
-    {
-      id: "istanbul",
-      name: "Istanbul",
-      country: "Turkey",
-      timezone: "Europe/Istanbul",
-    },
-    {
-      id: "dubai",
-      name: "Dubai",
-      country: "United Arab Emirates",
-      timezone: "Asia/Dubai",
-    },
-    {
-      id: "berlin",
-      name: "Berlin",
-      country: "Germany",
-      timezone: "Europe/Berlin",
-    },
-    {
-      id: "mumbai",
-      name: "Mumbai",
-      country: "India",
-      timezone: "Asia/Kolkata",
-    },
-    {
-      id: "los-angeles",
-      name: "Los Angeles",
-      country: "United States",
-      timezone: "America/Los_Angeles",
-    },
-    {
-      id: "sydney",
-      name: "Sydney",
-      country: "Australia",
-      timezone: "Australia/Sydney",
-    },
-  ];
+  // Helper function to get user's local timezone city
+  const getUserLocalCity = (): City => {
+    if (typeof window === "undefined") {
+      // Fallback for SSR
+      return {
+        id: "local",
+        name: "Local Time",
+        country: "Your Location",
+        timezone: "Europe/Istanbul",
+      };
+    }
+
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Try to extract city name from timezone (e.g., "America/New_York" -> "New York")
+    const timezoneParts = userTimezone.split("/");
+    const cityPart = timezoneParts[timezoneParts.length - 1];
+    let cityName = cityPart.replace(/_/g, " ");
+
+    // Map timezone regions to more user-friendly country/region names
+    const regionPart = timezoneParts[0];
+    const regionMap: { [key: string]: string } = {
+      America: "Americas",
+      Europe: "Europe",
+      Asia: "Asia",
+      Africa: "Africa",
+      Australia: "Australia",
+      Pacific: "Pacific",
+      Atlantic: "Atlantic",
+      Indian: "Indian Ocean",
+      Antarctica: "Antarctica",
+    };
+
+    // Special handling for common timezone mismatches
+    const timezoneOverrides: {
+      [key: string]: { city: string; country: string };
+    } = {
+      "Europe/Istanbul": { city: "Ankara", country: "Turkey" }, // Default to Ankara for Turkey
+    };
+
+    if (timezoneOverrides[userTimezone]) {
+      cityName = timezoneOverrides[userTimezone].city;
+      const countryName = timezoneOverrides[userTimezone].country;
+      return {
+        id: "local-user-timezone",
+        name: cityName,
+        country: countryName,
+        timezone: userTimezone,
+      };
+    }
+
+    const countryName = regionMap[regionPart] || regionPart.replace(/_/g, " ");
+
+    return {
+      id: "local-user-timezone",
+      name: cityName || "Local Time",
+      country: countryName || "Your Location",
+      timezone: userTimezone,
+    };
+  };
+
+  // Default cities if localStorage is empty - starts with user's local timezone
+  const getDefaultCities = useCallback((): City[] => {
+    const localCity = getUserLocalCity();
+
+    return [
+      localCity,
+      {
+        id: "dubai",
+        name: "Dubai",
+        country: "United Arab Emirates",
+        timezone: "Asia/Dubai",
+      },
+      {
+        id: "london",
+        name: "London",
+        country: "United Kingdom",
+        timezone: "Europe/London",
+      },
+      {
+        id: "tokyo",
+        name: "Tokyo",
+        country: "Japan",
+        timezone: "Asia/Tokyo",
+      },
+      {
+        id: "los-angeles",
+        name: "Los Angeles",
+        country: "United States",
+        timezone: "America/Los_Angeles",
+      },
+      {
+        id: "sydney",
+        name: "Sydney",
+        country: "Australia",
+        timezone: "Australia/Sydney",
+      },
+    ];
+  }, []);
 
   const [currentTime, setCurrentTime] = useState<DateTime>(DateTime.now());
   const [timeOffset, setTimeOffset] = useState(0);
-  const [selectedCities, setSelectedCities] = useState<City[]>(defaultCities);
+  const [selectedCities, setSelectedCities] = useState<City[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hoveredCityId, setHoveredCityId] = useState<string | null>(null);
   const [draggedCityId, setDraggedCityId] = useState<string | null>(null);
@@ -146,12 +207,22 @@ export default function Home() {
       try {
         const parsedCities = JSON.parse(savedCities);
         if (Array.isArray(parsedCities) && parsedCities.length > 0) {
-          setSelectedCities(parsedCities);
+          // Ensure the first city is always the user's local timezone
+          const localCity = getUserLocalCity();
+          const citiesWithoutLocal = parsedCities.filter(
+            (city) => city.id !== "local-user-timezone"
+          );
+          setSelectedCities([localCity, ...citiesWithoutLocal]);
+        } else {
+          setSelectedCities(getDefaultCities());
         }
       } catch (error) {
         console.error("Error parsing saved cities:", error);
-        // Keep default cities if parsing fails
+        setSelectedCities(getDefaultCities());
       }
+    } else {
+      // No saved cities, use defaults with user's local timezone
+      setSelectedCities(getDefaultCities());
     }
 
     // Show loading for 800ms, then keep for additional 500ms before hiding
@@ -160,15 +231,20 @@ export default function Home() {
     }, 1300); // 800ms loading + 500ms extra = 1300ms total
 
     return () => clearTimeout(hideLoadingTimer);
-  }, [isClient]);
+  }, [isClient, getDefaultCities]);
 
   // Save cities to localStorage whenever selectedCities changes (client-side only)
   useEffect(() => {
-    if (!isClient) return;
+    if (!isClient || selectedCities.length === 0) return;
+
+    // Don't save the local timezone city (first city) - it's generated dynamically
+    const citiesToSave = selectedCities.filter(
+      (city) => city.id !== "local-user-timezone"
+    );
 
     localStorage.setItem(
       "kairos-selected-cities",
-      JSON.stringify(selectedCities)
+      JSON.stringify(citiesToSave)
     );
   }, [selectedCities, isClient]);
 
@@ -190,6 +266,9 @@ export default function Home() {
   };
 
   const handleCityRemove = (cityId: string) => {
+    // Don't allow removing the local timezone city (reference city)
+    if (cityId === "local-user-timezone") return;
+
     setSelectedCities((prev) => prev.filter((city) => city.id !== cityId));
   };
 
@@ -324,9 +403,11 @@ export default function Home() {
               justifyContent: "center",
             }}
           >
-            <img
+            <Image
               src="/kairos-logo.png"
               alt="Kairos"
+              width={139}
+              height={34}
               style={{
                 width: "auto",
                 height: "110px",

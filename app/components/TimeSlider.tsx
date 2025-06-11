@@ -16,7 +16,6 @@ export function TimeSlider({
   const [rulerOffset, setRulerOffset] = useState(0);
   const [continuousOffset, setContinuousOffset] = useState(0);
   const [lastPointerX, setLastPointerX] = useState(0);
-  const [lastMoveTime, setLastMoveTime] = useState(0);
 
   // Double-click/tap state management
   const [lastTapTime, setLastTapTime] = useState(0);
@@ -124,7 +123,6 @@ export function TimeSlider({
   ) => {
     setIsDragging(true);
     setLastPointerX(clientX);
-    setLastMoveTime(Date.now());
 
     // Only prevent default for non-touch events to avoid scroll issues
     if (event.type !== "touchstart") {
@@ -151,7 +149,6 @@ export function TimeSlider({
     (e: PointerEvent) => {
       if (!isDragging || !sliderRef.current) return;
 
-      const currentTime = Date.now();
       const deltaX = e.clientX - lastPointerX;
 
       // Update continuous offset for ultra-smooth dragging
@@ -165,22 +162,14 @@ export function TimeSlider({
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.clientX);
-      setLastMoveTime(currentTime);
     },
-    [
-      isDragging,
-      lastPointerX,
-      lastMoveTime,
-      continuousOffset,
-      onTimeOffsetChange,
-    ]
+    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
   );
 
   const handleTouchMove = useCallback(
     (e: TouchEvent) => {
       if (!isDragging || !sliderRef.current || e.touches.length !== 1) return;
 
-      const currentTime = Date.now();
       const deltaX = e.touches[0].clientX - lastPointerX;
 
       // Update continuous offset for ultra-smooth dragging
@@ -194,25 +183,17 @@ export function TimeSlider({
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.touches[0].clientX);
-      setLastMoveTime(currentTime);
 
       // Always prevent default for touch move to stop scrolling during drag
       e.preventDefault();
     },
-    [
-      isDragging,
-      lastPointerX,
-      lastMoveTime,
-      continuousOffset,
-      onTimeOffsetChange,
-    ]
+    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
   );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!isDragging || !sliderRef.current) return;
 
-      const currentTime = Date.now();
       const deltaX = e.clientX - lastPointerX;
 
       // Update continuous offset for ultra-smooth dragging
@@ -226,15 +207,8 @@ export function TimeSlider({
       onTimeOffsetChange(newHourOffset);
 
       setLastPointerX(e.clientX);
-      setLastMoveTime(currentTime);
     },
-    [
-      isDragging,
-      lastPointerX,
-      lastMoveTime,
-      continuousOffset,
-      onTimeOffsetChange,
-    ]
+    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
   );
 
   const handlePointerUp = useCallback(() => {
