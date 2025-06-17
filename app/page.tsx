@@ -434,9 +434,6 @@ export default function Home() {
                 }}
               />
             </div>
-            <div style={{ color: "#515151", fontSize: "14px" }}>
-              Loading Kairos...
-            </div>
           </div>
         </div>
       </div>
