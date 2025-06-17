@@ -1,11 +1,22 @@
 [build]
   command = "npm run build"
+  publish = "out"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
   NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/kairos-logo.png"
+    [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # Force deployment - Updated to include latest loading screen improvements
 # Deployment timestamp: 2024-06-01 - Loading screen with 0.5s delay, webpack fixes 

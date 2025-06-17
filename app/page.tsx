@@ -2,7 +2,6 @@
 
 import { MapPinIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { DateTime } from "luxon";
-import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { AnimatedTimeDisplay } from "./components/AnimatedTimeDisplay";
 import { CitySelectionModal } from "./components/CitySelectionModal";
@@ -401,19 +400,30 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexDirection: "column",
+              gap: "16px",
             }}
           >
-            <Image
-              src="/kairos-logo.png"
-              alt="Kairos"
-              width={318}
-              height={78}
+            <div
               style={{
-                width: "auto",
-                height: "110px",
+                width: "318px",
+                height: "78px",
+                position: "relative",
+                backgroundImage: "url('/kairos-logo.png')",
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                imageRendering: "crisp-edges",
+                WebkitFontSmoothing: "antialiased",
               }}
-              priority
+              onError={(e) => {
+                console.error("Error loading logo");
+                e.currentTarget.style.display = "none";
+              }}
             />
+            <div style={{ color: "#515151", fontSize: "14px" }}>
+              Loading Kairos...
+            </div>
           </div>
         </div>
       </div>
