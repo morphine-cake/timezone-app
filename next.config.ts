@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
   },
   output: "export",
-  assetPrefix: ".",
 };
 
 export default nextConfig;

@@ -2,6 +2,9 @@ import { readFileSync } from "fs";
 import { NextResponse } from "next/server";
 import { join } from "path";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export async function GET() {
   try {
     const citiesPath = join(process.cwd(), "server", "data", "cities.json");

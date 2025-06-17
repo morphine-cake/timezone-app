@@ -409,14 +409,31 @@ export default function Home() {
                 width: "318px",
                 height: "78px",
                 position: "relative",
-                backgroundImage: "url('/kairos-logo.png')",
-                backgroundSize: "contain",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                imageRendering: "crisp-edges",
-                WebkitFontSmoothing: "antialiased",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-            />
+            >
+              <img
+                src="/kairos-logo.png"
+                alt="Kairos"
+                style={{
+                  width: "auto",
+                  height: "auto",
+                  maxWidth: "318px",
+                  maxHeight: "78px",
+                  objectFit: "contain",
+                }}
+                onError={(e) => {
+                  console.error("Failed to load logo image");
+                  // Fallback to relative path
+                  const target = e.target as HTMLImageElement;
+                  if (target.src.includes("/kairos-logo.png")) {
+                    target.src = "./kairos-logo.png";
+                  }
+                }}
+              />
+            </div>
             <div style={{ color: "#515151", fontSize: "14px" }}>
               Loading Kairos...
             </div>
