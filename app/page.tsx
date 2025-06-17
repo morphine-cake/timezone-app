@@ -416,10 +416,6 @@ export default function Home() {
                 imageRendering: "crisp-edges",
                 WebkitFontSmoothing: "antialiased",
               }}
-              onError={(e) => {
-                console.error("Error loading logo");
-                e.currentTarget.style.display = "none";
-              }}
             />
             <div style={{ color: "#515151", fontSize: "14px" }}>
               Loading Kairos...
