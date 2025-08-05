@@ -14,7 +14,7 @@ const firaMono = Fira_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kairos-timezone.netlify.app"),
+  metadataBase: new URL("https://kairos-time.app"),
   title: "Kairos – Smart World Clock & Timezone Converter",
   description:
     "Easily compare timezones, track current times in cities worldwide, and plan meetings smarter with Kairos – your sleek, modern timezone companion.",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     "compare timezones",
     "current time in cities",
   ],
-  authors: [{ name: "Kairos" }],
-  creator: "Kairos",
-  publisher: "Kairos",
+  authors: [{ name: "Burak Başcı" }],
+  creator: "Burak Başcı",
+  publisher: "Burak Başcı",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -43,11 +43,11 @@ export const metadata: Metadata = {
     title: "Kairos – Smart World Clock & Timezone Converter",
     description:
       "Easily compare timezones, track current times in cities worldwide, and plan meetings smarter with Kairos – your sleek, modern timezone companion.",
-    url: "https://kairos-timezone.netlify.app",
+    url: "https://kairos-time.app",
     siteName: "Kairos",
     images: [
       {
-        url: "https://kairos-timezone.netlify.app/social-preview.png",
+        url: "https://kairos-time.app/social-preview.png",
         width: 1200,
         height: 630,
         alt: "Kairos - Smart World Clock & Timezone Converter",
@@ -62,9 +62,9 @@ export const metadata: Metadata = {
     title: "Kairos – Smart World Clock & Timezone Converter",
     description:
       "Easily compare timezones, track current times in cities worldwide, and plan meetings smarter with Kairos – your sleek, modern timezone companion.",
-    images: ["https://kairos-timezone.netlify.app/social-preview.png"],
+    images: ["https://kairos-time.app/social-preview.png"],
     site: "@kairos",
-    creator: "@kairos",
+    creator: "@burakbasci",
   },
   robots: {
     index: true,
@@ -87,6 +87,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-F2PBJ7JQCF"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-F2PBJ7JQCF');
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${manrope.variable} ${firaMono.variable} antialiased bg-black text-white font-sans`}
         style={{ margin: 0, padding: 0, backgroundColor: "#000000" }}

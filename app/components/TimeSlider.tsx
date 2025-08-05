@@ -3,13 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface TimeSliderProps {
-  onTimeOffsetChange: (offsetHours: number) => void;
+  onTimeOffsetChange: (offsetMinutes: number) => void;
   currentOffset: number;
+  currentTime: any; // DateTime from luxon
 }
 
 export function TimeSlider({
   onTimeOffsetChange,
   currentOffset,
+  currentTime,
 }: TimeSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -23,18 +25,56 @@ export function TimeSlider({
   const [isAnimatingToCenter, setIsAnimatingToCenter] = useState(false);
   const stepAnimationRef = useRef<NodeJS.Timeout | null>(null);
 
-  const HOUR_WIDTH = 8; // Width per hour (each line = 1 hour, 8px spacing)
+  const HOUR_WIDTH = 8; // Width per hour (each line = 1 hour, 8px spacing) - but each step = 15min
   const VISIBLE_LINES = 200; // Number of hours to render (enough for smooth infinite scroll)
   const DOUBLE_TAP_DELAY = 300; // ms for double tap detection
   const TOTAL_ANIMATION_DURATION = 460; // ms for the entire countdown animation
 
+  // Helper function to get the first quarter-hour rounded offset
+  const getFirstQuarterHourOffset = (direction: number) => {
+    const currentMinutes = currentTime.minute;
+
+    if (direction > 0) {
+      // Moving forward - go to next quarter hour
+      if (currentMinutes === 0) return 15;
+      if (currentMinutes < 15) return 15 - currentMinutes;
+      if (currentMinutes < 30) return 30 - currentMinutes;
+      if (currentMinutes < 45) return 45 - currentMinutes;
+      return 60 - currentMinutes; // Next hour
+    } else {
+      // Moving backward - go to previous quarter hour
+      if (currentMinutes === 0) return -15;
+      if (currentMinutes <= 15) return -currentMinutes;
+      if (currentMinutes <= 30) return -(currentMinutes - 15);
+      if (currentMinutes <= 45) return -(currentMinutes - 30);
+      return -(currentMinutes - 45);
+    }
+  };
+
   useEffect(() => {
     // Set ruler offset based on current time offset
-    // Drag left = positive hours (future), drag right = negative hours (past)
-    const targetOffset = -currentOffset * HOUR_WIDTH;
+    // Drag left = positive minutes (future), drag right = negative minutes (past)
+    // Calculate visual position based on actual offset, handling smart snapping
+    let visualSteps = 0;
+
+    if (currentOffset !== 0) {
+      const firstStep = getFirstQuarterHourOffset(currentOffset > 0 ? 1 : -1);
+
+      if (Math.abs(currentOffset) <= Math.abs(firstStep)) {
+        // We're at the first step
+        visualSteps = currentOffset > 0 ? 1 : -1;
+      } else {
+        // We're beyond the first step
+        const remainingOffset = currentOffset - firstStep;
+        const additionalSteps = Math.round(remainingOffset / 15);
+        visualSteps = (currentOffset > 0 ? 1 : -1) + additionalSteps;
+      }
+    }
+
+    const targetOffset = -visualSteps * HOUR_WIDTH;
     setRulerOffset(targetOffset);
     setContinuousOffset(targetOffset);
-  }, [currentOffset]);
+  }, [currentOffset, currentTime]);
 
   // Double-click/tap handler
   const handleDoubleClick = useCallback(() => {
@@ -50,24 +90,41 @@ export function TimeSlider({
     setIsAnimatingToCenter(true);
 
     // Calculate delay per step for consistent 460ms total duration
-    const totalSteps = Math.abs(currentOffset);
+    // Count visual steps needed to reach 0
+    let totalSteps = 0;
+    let tempOffset = currentOffset;
+
+    while (tempOffset !== 0) {
+      totalSteps++;
+      if (
+        Math.abs(tempOffset) <=
+        Math.abs(getFirstQuarterHourOffset(tempOffset > 0 ? 1 : -1))
+      ) {
+        tempOffset = 0; // Next step reaches zero
+      } else {
+        tempOffset += tempOffset > 0 ? -15 : 15; // Regular 15-minute steps
+      }
+      if (totalSteps > 20) break; // Safety
+    }
+
     const stepDelay =
       totalSteps > 1
         ? TOTAL_ANIMATION_DURATION / totalSteps
         : TOTAL_ANIMATION_DURATION;
-
-    // Determine direction (positive means count down, negative means count up)
-    const direction = currentOffset > 0 ? -1 : 1;
     let stepOffset = currentOffset;
 
     const animateStep = () => {
-      // Move one step toward zero
-      stepOffset += direction;
+      // Calculate next step
+      if (
+        Math.abs(stepOffset) <=
+        Math.abs(getFirstQuarterHourOffset(stepOffset > 0 ? 1 : -1))
+      ) {
+        stepOffset = 0; // Go directly to zero
+      } else {
+        stepOffset += stepOffset > 0 ? -15 : 15; // Regular 15-minute steps
+      }
 
-      // Update the visual position
-      const targetRulerOffset = -stepOffset * HOUR_WIDTH;
-      setContinuousOffset(targetRulerOffset);
-      setRulerOffset(targetRulerOffset);
+      // Update using onTimeOffsetChange which will handle visual positioning
       onTimeOffsetChange(stepOffset);
 
       // Check if we've reached current time (0)
@@ -82,7 +139,7 @@ export function TimeSlider({
 
     // Start the step animation
     animateStep();
-  }, [currentOffset, onTimeOffsetChange]);
+  }, [currentOffset, onTimeOffsetChange, currentTime]);
 
   // Handle double tap for touch devices
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -156,10 +213,24 @@ export function TimeSlider({
       setContinuousOffset(newOffset);
       setRulerOffset(newOffset);
 
-      // Update discrete hour offset for the parent component
-      // Drag left = positive hours (future), drag right = negative hours (past)
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
-      onTimeOffsetChange(newHourOffset);
+      // Update discrete minute offset for the parent component
+      // Drag left = positive minutes (future), drag right = negative minutes (past)
+      const steps = -Math.round(newOffset / HOUR_WIDTH);
+      let newMinuteOffset;
+
+      if (steps === 0) {
+        newMinuteOffset = 0;
+      } else if (Math.abs(steps) === 1) {
+        // First step: round to nearest quarter hour
+        newMinuteOffset = getFirstQuarterHourOffset(steps);
+      } else {
+        // Subsequent steps: first quarter hour + additional 15-minute steps
+        const firstStep = getFirstQuarterHourOffset(steps > 0 ? 1 : -1);
+        newMinuteOffset =
+          firstStep + (steps > 0 ? (steps - 1) * 15 : (steps + 1) * 15);
+      }
+
+      onTimeOffsetChange(newMinuteOffset);
 
       setLastPointerX(e.clientX);
     },
@@ -177,10 +248,24 @@ export function TimeSlider({
       setContinuousOffset(newOffset);
       setRulerOffset(newOffset);
 
-      // Update discrete hour offset for the parent component
-      // Drag left = positive hours (future), drag right = negative hours (past)
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
-      onTimeOffsetChange(newHourOffset);
+      // Update discrete minute offset for the parent component
+      // Drag left = positive minutes (future), drag right = negative minutes (past)
+      const steps = -Math.round(newOffset / HOUR_WIDTH);
+      let newMinuteOffset;
+
+      if (steps === 0) {
+        newMinuteOffset = 0;
+      } else if (Math.abs(steps) === 1) {
+        // First step: round to nearest quarter hour
+        newMinuteOffset = getFirstQuarterHourOffset(steps);
+      } else {
+        // Subsequent steps: first quarter hour + additional 15-minute steps
+        const firstStep = getFirstQuarterHourOffset(steps > 0 ? 1 : -1);
+        newMinuteOffset =
+          firstStep + (steps > 0 ? (steps - 1) * 15 : (steps + 1) * 15);
+      }
+
+      onTimeOffsetChange(newMinuteOffset);
 
       setLastPointerX(e.touches[0].clientX);
 
@@ -201,10 +286,24 @@ export function TimeSlider({
       setContinuousOffset(newOffset);
       setRulerOffset(newOffset);
 
-      // Update discrete hour offset for the parent component
-      // Drag left = positive hours (future), drag right = negative hours (past)
-      const newHourOffset = -Math.round(newOffset / HOUR_WIDTH);
-      onTimeOffsetChange(newHourOffset);
+      // Update discrete minute offset for the parent component
+      // Drag left = positive minutes (future), drag right = negative minutes (past)
+      const steps = -Math.round(newOffset / HOUR_WIDTH);
+      let newMinuteOffset;
+
+      if (steps === 0) {
+        newMinuteOffset = 0;
+      } else if (Math.abs(steps) === 1) {
+        // First step: round to nearest quarter hour
+        newMinuteOffset = getFirstQuarterHourOffset(steps);
+      } else {
+        // Subsequent steps: first quarter hour + additional 15-minute steps
+        const firstStep = getFirstQuarterHourOffset(steps > 0 ? 1 : -1);
+        newMinuteOffset =
+          firstStep + (steps > 0 ? (steps - 1) * 15 : (steps + 1) * 15);
+      }
+
+      onTimeOffsetChange(newMinuteOffset);
 
       setLastPointerX(e.clientX);
     },
@@ -263,12 +362,9 @@ export function TimeSlider({
   // Calculate smooth positioning values for visual elements
   // Use rulerOffset during dragging or step animation for smooth alignment with ruler lines
   // Use currentOffset when not dragging for discrete behavior
-  const visualOffset =
-    isDragging || isAnimatingToCenter
-      ? -rulerOffset / HOUR_WIDTH
-      : currentOffset;
+  const visualOffset = currentOffset;
 
-  // Generate ruler lines with infinite scroll (each line = 1 hour)
+  // Generate ruler lines with infinite scroll (each visual line = 1 hour, but each step = 15 minutes)
   const generateRulerLines = () => {
     const lines = [];
     // Calculate the range of hours to show based on current offset
@@ -365,11 +461,8 @@ export function TimeSlider({
               className="time-range-rectangle"
               style={{
                 position: "absolute",
-                left:
-                  visualOffset > 0
-                    ? `calc(50% + ${-visualOffset * HOUR_WIDTH}px)`
-                    : "50%",
-                width: `${Math.abs(visualOffset * HOUR_WIDTH)}px`,
+                left: visualOffset > 0 ? `calc(50% + ${rulerOffset}px)` : "50%",
+                width: `${Math.abs(rulerOffset)}px`,
                 height: "100%",
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
                 zIndex: 1,
@@ -438,7 +531,15 @@ export function TimeSlider({
         >
           {currentOffset === 0
             ? "CURRENT TIME"
-            : `${currentOffset > 0 ? "+" : ""}${currentOffset}H`}
+            : `${currentOffset > 0 ? "+" : ""}${
+                Math.abs(currentOffset) >= 60
+                  ? `${Math.floor(Math.abs(currentOffset) / 60)}H${
+                      Math.abs(currentOffset) % 60 > 0
+                        ? ` ${Math.abs(currentOffset) % 60}M`
+                        : ""
+                    }`
+                  : `${currentOffset}M`
+              }`}
         </div>
 
         {/* Moving Triangle - Shows where current time appears on dial (positioned below dial) */}
@@ -448,9 +549,7 @@ export function TimeSlider({
             position: "absolute",
             left: "50%",
             bottom: "-12px", // Position below the dial
-            transform: `translateX(calc(-50% + ${
-              -visualOffset * HOUR_WIDTH
-            }px))`,
+            transform: `translateX(calc(-50% + ${rulerOffset}px))`,
             width: "0",
             height: "0",
             borderLeft: "6px solid transparent",

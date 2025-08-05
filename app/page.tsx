@@ -256,8 +256,8 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleTimeOffsetChange = (offsetHours: number) => {
-    setTimeOffset(offsetHours);
+  const handleTimeOffsetChange = (offsetMinutes: number) => {
+    setTimeOffset(offsetMinutes);
   };
 
   const handleCitySelect = (city: City) => {
@@ -344,7 +344,7 @@ export default function Home() {
   };
 
   const getAdjustedTime = (timezone: string) => {
-    const baseTime = currentTime.plus({ hours: timeOffset });
+    const baseTime = currentTime.plus({ minutes: timeOffset });
     return baseTime.setZone(timezone);
   };
 
@@ -523,6 +523,7 @@ export default function Home() {
             <TimeSlider
               onTimeOffsetChange={handleTimeOffsetChange}
               currentOffset={timeOffset}
+              currentTime={currentTime}
             />
           </div>
 

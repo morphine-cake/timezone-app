@@ -73,7 +73,7 @@ export function AnimatedTimeDisplay({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const getAdjustedTime = (timezone: string, offset: number) => {
-    const baseTime = DateTime.now().plus({ hours: offset });
+    const baseTime = DateTime.now().plus({ minutes: offset });
     return baseTime.setZone(timezone);
   };
 
