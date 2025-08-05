@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { DateTime } from "luxon";
+
 interface TimeSliderProps {
   onTimeOffsetChange: (offsetMinutes: number) => void;
   currentOffset: number;
-  currentTime: any; // DateTime from luxon
+  currentTime: DateTime;
 }
 
 export function TimeSlider({
@@ -31,25 +33,28 @@ export function TimeSlider({
   const TOTAL_ANIMATION_DURATION = 460; // ms for the entire countdown animation
 
   // Helper function to get the first quarter-hour rounded offset
-  const getFirstQuarterHourOffset = (direction: number) => {
-    const currentMinutes = currentTime.minute;
+  const getFirstQuarterHourOffset = useCallback(
+    (direction: number) => {
+      const currentMinutes = currentTime.minute;
 
-    if (direction > 0) {
-      // Moving forward - go to next quarter hour
-      if (currentMinutes === 0) return 15;
-      if (currentMinutes < 15) return 15 - currentMinutes;
-      if (currentMinutes < 30) return 30 - currentMinutes;
-      if (currentMinutes < 45) return 45 - currentMinutes;
-      return 60 - currentMinutes; // Next hour
-    } else {
-      // Moving backward - go to previous quarter hour
-      if (currentMinutes === 0) return -15;
-      if (currentMinutes <= 15) return -currentMinutes;
-      if (currentMinutes <= 30) return -(currentMinutes - 15);
-      if (currentMinutes <= 45) return -(currentMinutes - 30);
-      return -(currentMinutes - 45);
-    }
-  };
+      if (direction > 0) {
+        // Moving forward - go to next quarter hour
+        if (currentMinutes === 0) return 15;
+        if (currentMinutes < 15) return 15 - currentMinutes;
+        if (currentMinutes < 30) return 30 - currentMinutes;
+        if (currentMinutes < 45) return 45 - currentMinutes;
+        return 60 - currentMinutes; // Next hour
+      } else {
+        // Moving backward - go to previous quarter hour
+        if (currentMinutes === 0) return -15;
+        if (currentMinutes <= 15) return -currentMinutes;
+        if (currentMinutes <= 30) return -(currentMinutes - 15);
+        if (currentMinutes <= 45) return -(currentMinutes - 30);
+        return -(currentMinutes - 45);
+      }
+    },
+    [currentTime.minute]
+  );
 
   useEffect(() => {
     // Set ruler offset based on current time offset
@@ -74,7 +79,7 @@ export function TimeSlider({
     const targetOffset = -visualSteps * HOUR_WIDTH;
     setRulerOffset(targetOffset);
     setContinuousOffset(targetOffset);
-  }, [currentOffset, currentTime]);
+  }, [currentOffset, currentTime, getFirstQuarterHourOffset]);
 
   // Double-click/tap handler
   const handleDoubleClick = useCallback(() => {
@@ -139,7 +144,12 @@ export function TimeSlider({
 
     // Start the step animation
     animateStep();
-  }, [currentOffset, onTimeOffsetChange, currentTime]);
+  }, [
+    currentOffset,
+    onTimeOffsetChange,
+    currentTime,
+    getFirstQuarterHourOffset,
+  ]);
 
   // Handle double tap for touch devices
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -234,7 +244,13 @@ export function TimeSlider({
 
       setLastPointerX(e.clientX);
     },
-    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
+    [
+      isDragging,
+      lastPointerX,
+      continuousOffset,
+      onTimeOffsetChange,
+      getFirstQuarterHourOffset,
+    ]
   );
 
   const handleTouchMove = useCallback(
@@ -272,7 +288,13 @@ export function TimeSlider({
       // Always prevent default for touch move to stop scrolling during drag
       e.preventDefault();
     },
-    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
+    [
+      isDragging,
+      lastPointerX,
+      continuousOffset,
+      onTimeOffsetChange,
+      getFirstQuarterHourOffset,
+    ]
   );
 
   const handleMouseMove = useCallback(
@@ -307,7 +329,13 @@ export function TimeSlider({
 
       setLastPointerX(e.clientX);
     },
-    [isDragging, lastPointerX, continuousOffset, onTimeOffsetChange]
+    [
+      isDragging,
+      lastPointerX,
+      continuousOffset,
+      onTimeOffsetChange,
+      getFirstQuarterHourOffset,
+    ]
   );
 
   const handlePointerUp = useCallback(() => {
