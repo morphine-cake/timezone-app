@@ -26,24 +26,27 @@ final class CityStore {
     private(set) var cities: [City]
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let cloud: CloudKeyValueStore
-    @ObservationIgnored nonisolated(unsafe) private var observer: (any NSObjectProtocol)?
+    @ObservationIgnored private let makeLocalCity: () -> City
+    @ObservationIgnored nonisolated(unsafe) private var observers: [any NSObjectProtocol] = []
 
+    /// `localCity` is evaluated again whenever the device changes time zone.
     init(
         defaults: UserDefaults = .standard,
         cloud: CloudKeyValueStore = NSUbiquitousKeyValueStore.default,
-        localCity: City = .local()
+        localCity: @autoclosure @escaping () -> City = .local()
     ) {
         self.defaults = defaults
         self.cloud = cloud
+        self.makeLocalCity = localCity
         cloud.synchronize()
 
         let saved = Self.decode(cloud.data(forKey: Self.storageKey)) ?? Self.decode(defaults.data(forKey: Self.storageKey))
-        cities = [localCity] + (saved ?? City.defaults)
+        cities = [localCity()] + (saved ?? City.defaults)
         // Only the local mirror is written here: until the user changes the list, iCloud keeps
         // whatever another device stored (writes before the first iCloud download are dropped anyway).
         saveLocally()
 
-        observer = NotificationCenter.default.addObserver(
+        observers.append(NotificationCenter.default.addObserver(
             forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
             object: cloud,
             queue: .main
@@ -53,11 +56,21 @@ final class CityStore {
             MainActor.assumeIsolated {
                 self?.cloudDidChange(reason: reason, keys: keys)
             }
-        }
+        })
+
+        observers.append(NotificationCenter.default.addObserver(
+            forName: .NSSystemTimeZoneDidChange,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.refreshLocalCity()
+            }
+        })
     }
 
     deinit {
-        if let observer { NotificationCenter.default.removeObserver(observer) }
+        observers.forEach(NotificationCenter.default.removeObserver)
     }
 
     var reference: City { cities[0] }
@@ -86,6 +99,15 @@ final class CityStore {
         let city = cities.remove(at: draggedIndex)
         cities.insert(city, at: dropIndex)
         save()
+    }
+
+    /// The device may be in another time zone (travel, or a change in Settings): rebuild the
+    /// local city so the reference row and every difference follow it. Never saved.
+    func refreshLocalCity() {
+        NSTimeZone.resetSystemTimeZone()
+        let local = makeLocalCity()
+        guard local != cities[0] else { return }
+        cities[0] = local
     }
 
     // MARK: iCloud

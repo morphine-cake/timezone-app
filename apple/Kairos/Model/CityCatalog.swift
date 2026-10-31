@@ -6,6 +6,9 @@ struct CityCatalog: Sendable {
 
     static let resultLimit = 50
 
+    /// The list bundled with the app; empty if it can't be read.
+    static let bundled = (try? CityCatalog()) ?? CityCatalog(cities: [])
+
     init(cities: [City]) {
         self.cities = cities
     }
@@ -20,6 +23,18 @@ struct CityCatalog: Sendable {
     init(data: Data) throws {
         struct Payload: Decodable { let cities: [City] }
         self.init(cities: try JSONDecoder().decode(Payload.self, from: data).cities)
+    }
+
+    /// The city that best stands for a time zone: the one the zone is named after
+    /// ("Asia/Kolkata" -> Kolkata, "America/Bogota" -> Bogotá), else the first listed in it
+    /// ("Asia/Ho_Chi_Minh" -> Ho Chi Minh City). Nil when the catalog has no city in the zone.
+    func mainCity(inTimeZone identifier: String) -> City? {
+        let inZone = cities.filter { $0.timezone == identifier }
+        let zoneCity = (identifier.split(separator: "/").last.map(String.init) ?? "")
+            .replacingOccurrences(of: "_", with: " ")
+        return inZone.first {
+            $0.name.compare(zoneCity, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
+        } ?? inZone.first
     }
 
     /// Port of the filter in CitySelectionModal.tsx: match name or country, names that start

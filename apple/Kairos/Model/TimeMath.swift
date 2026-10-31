@@ -1,4 +1,5 @@
 import Foundation
+import Synchronization
 
 /// Time calculations behind the slider and the city rows, ported from
 /// app/components/TimeSlider.tsx and app/page.tsx.
@@ -122,13 +123,22 @@ enum TimeMath {
     }
 
     /// Short zone name as the web shows it (Luxon "ZZZZ" / Intl en-US): "PDT", "GMT+4", "GMT+5:30".
+    /// Called for every row each second, so one formatter per zone is kept rather than made each time.
     static func abbreviation(for timeZone: TimeZone, at date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.timeZone = timeZone
-        formatter.dateFormat = "zzz"
-        return formatter.string(from: date)
+        abbreviationFormatters.withLock { formatters in
+            let formatter = formatters[timeZone.identifier] ?? {
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US")
+                formatter.timeZone = timeZone
+                formatter.dateFormat = "zzz"
+                formatters[timeZone.identifier] = formatter
+                return formatter
+            }()
+            return formatter.string(from: date)
+        }
     }
+
+    private static let abbreviationFormatters = Mutex<[String: DateFormatter]>([:])
 
     /// "GMT+4", "GMT-8", "GMT+5:30", "GMT+0".
     static func gmtOffsetLabel(for timeZone: TimeZone, at date: Date) -> String {

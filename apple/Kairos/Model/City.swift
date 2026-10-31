@@ -15,11 +15,16 @@ extension City {
     /// Id of the device's own city. It is generated per device, always shown first and never saved.
     static let localCityID = "local-user-timezone"
 
-    /// Port of `getUserLocalCity` in app/page.tsx: derives a city from the device time zone,
-    /// e.g. "America/New_York" -> "New York", "Americas".
-    static func local(timeZoneIdentifier: String = TimeZone.current.identifier) -> City {
+    /// The device's city for a time zone. Prefers a catalog city in that zone, so
+    /// "America/New_York" -> "New York", "United States"; zones the catalog doesn't cover fall
+    /// back to `getUserLocalCity` in app/page.tsx, e.g. "Indian/Chagos" -> "Chagos", "Indian Ocean".
+    static func local(timeZoneIdentifier: String = TimeZone.current.identifier, catalog: CityCatalog? = nil) -> City {
         if let override = localOverrides[timeZoneIdentifier] {
             return City(id: localCityID, name: override.city, country: override.country, timezone: timeZoneIdentifier)
+        }
+
+        if let match = catalog?.mainCity(inTimeZone: timeZoneIdentifier) {
+            return City(id: localCityID, name: match.name, country: match.country, timezone: timeZoneIdentifier)
         }
 
         let parts = timeZoneIdentifier.split(separator: "/").map(String.init)

@@ -217,12 +217,6 @@
       "timezone": "Asia/Kolkata"
     },
     {
-      "id": "bangalore",
-      "name": "Bangalore",
-      "country": "India",
-      "timezone": "Asia/Kolkata"
-    },
-    {
       "id": "bengaluru",
       "name": "Bengaluru",
       "country": "India",
@@ -373,6 +367,12 @@
       "timezone": "Asia/Kathmandu"
     },
     {
+      "id": "male",
+      "name": "Malé",
+      "country": "Maldives",
+      "timezone": "Indian/Maldives"
+    },
+    {
       "id": "bangkok",
       "name": "Bangkok",
       "country": "Thailand",
@@ -415,6 +415,12 @@
       "timezone": "Asia/Seoul"
     },
     {
+      "id": "ulaanbaatar",
+      "name": "Ulaanbaatar",
+      "country": "Mongolia",
+      "timezone": "Asia/Ulaanbaatar"
+    },
+    {
       "id": "beijing",
       "name": "Beijing",
       "country": "China",
@@ -429,6 +435,30 @@
     {
       "id": "shenzhen",
       "name": "Shenzhen",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "chengdu",
+      "name": "Chengdu",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "chongqing",
+      "name": "Chongqing",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "wuhan",
+      "name": "Wuhan",
+      "country": "China",
+      "timezone": "Asia/Shanghai"
+    },
+    {
+      "id": "hangzhou",
+      "name": "Hangzhou",
       "country": "China",
       "timezone": "Asia/Shanghai"
     },
@@ -545,6 +575,30 @@
       "name": "Perth",
       "country": "Australia",
       "timezone": "Australia/Perth"
+    },
+    {
+      "id": "adelaide",
+      "name": "Adelaide",
+      "country": "Australia",
+      "timezone": "Australia/Adelaide"
+    },
+    {
+      "id": "darwin",
+      "name": "Darwin",
+      "country": "Australia",
+      "timezone": "Australia/Darwin"
+    },
+    {
+      "id": "hobart",
+      "name": "Hobart",
+      "country": "Australia",
+      "timezone": "Australia/Hobart"
+    },
+    {
+      "id": "canberra",
+      "name": "Canberra",
+      "country": "Australia",
+      "timezone": "Australia/Sydney"
     },
     {
       "id": "auckland",
@@ -952,7 +1006,7 @@
       "id": "montreal",
       "name": "Montreal",
       "country": "Canada",
-      "timezone": "America/Montreal"
+      "timezone": "America/Toronto"
     },
     {
       "id": "calgary",
@@ -1090,7 +1144,7 @@
       "id": "yellowknife",
       "name": "Yellowknife",
       "country": "Canada",
-      "timezone": "America/Yellowknife"
+      "timezone": "America/Edmonton"
     },
     {
       "id": "iqaluit",
@@ -1183,13 +1237,37 @@
       "timezone": "America/Mexico_City"
     },
     {
+      "id": "guadalajara",
+      "name": "Guadalajara",
+      "country": "Mexico",
+      "timezone": "America/Mexico_City"
+    },
+    {
+      "id": "monterrey",
+      "name": "Monterrey",
+      "country": "Mexico",
+      "timezone": "America/Monterrey"
+    },
+    {
+      "id": "cancun",
+      "name": "Cancún",
+      "country": "Mexico",
+      "timezone": "America/Cancun"
+    },
+    {
+      "id": "tijuana",
+      "name": "Tijuana",
+      "country": "Mexico",
+      "timezone": "America/Tijuana"
+    },
+    {
       "id": "guatemala-city",
       "name": "Guatemala City",
       "country": "Guatemala",
       "timezone": "America/Guatemala"
     },
     {
-      "id": "san-jose",
+      "id": "san-jose-cr",
       "name": "San José",
       "country": "Costa Rica",
       "timezone": "America/Costa_Rica"
@@ -1199,6 +1277,30 @@
       "name": "Panama City",
       "country": "Panama",
       "timezone": "America/Panama"
+    },
+    {
+      "id": "san-juan",
+      "name": "San Juan",
+      "country": "Puerto Rico",
+      "timezone": "America/Puerto_Rico"
+    },
+    {
+      "id": "havana",
+      "name": "Havana",
+      "country": "Cuba",
+      "timezone": "America/Havana"
+    },
+    {
+      "id": "kingston-jm",
+      "name": "Kingston",
+      "country": "Jamaica",
+      "timezone": "America/Jamaica"
+    },
+    {
+      "id": "santo-domingo",
+      "name": "Santo Domingo",
+      "country": "Dominican Republic",
+      "timezone": "America/Santo_Domingo"
     },
     {
       "id": "bogota",
@@ -1421,6 +1523,12 @@
       "name": "Antananarivo",
       "country": "Madagascar",
       "timezone": "Indian/Antananarivo"
+    },
+    {
+      "id": "port-louis",
+      "name": "Port Louis",
+      "country": "Mauritius",
+      "timezone": "Indian/Mauritius"
     },
     {
       "id": "kigali",
@@ -1759,6 +1867,18 @@
       "timezone": "Europe/Moscow"
     },
     {
+      "id": "kaliningrad",
+      "name": "Kaliningrad",
+      "country": "Russia",
+      "timezone": "Europe/Kaliningrad"
+    },
+    {
+      "id": "samara",
+      "name": "Samara",
+      "country": "Russia",
+      "timezone": "Europe/Samara"
+    },
+    {
       "id": "novosibirsk",
       "name": "Novosibirsk",
       "country": "Russia",
@@ -1771,10 +1891,46 @@
       "timezone": "Asia/Yekaterinburg"
     },
     {
+      "id": "omsk",
+      "name": "Omsk",
+      "country": "Russia",
+      "timezone": "Asia/Omsk"
+    },
+    {
+      "id": "krasnoyarsk",
+      "name": "Krasnoyarsk",
+      "country": "Russia",
+      "timezone": "Asia/Krasnoyarsk"
+    },
+    {
+      "id": "irkutsk",
+      "name": "Irkutsk",
+      "country": "Russia",
+      "timezone": "Asia/Irkutsk"
+    },
+    {
+      "id": "yakutsk",
+      "name": "Yakutsk",
+      "country": "Russia",
+      "timezone": "Asia/Yakutsk"
+    },
+    {
       "id": "vladivostok",
       "name": "Vladivostok",
       "country": "Russia",
       "timezone": "Asia/Vladivostok"
+    },
+    {
+      "id": "magadan",
+      "name": "Magadan",
+      "country": "Russia",
+      "timezone": "Asia/Magadan"
+    },
+    {
+      "id": "petropavlovsk-kamchatsky",
+      "name": "Petropavlovsk-Kamchatsky",
+      "country": "Russia",
+      "timezone": "Asia/Kamchatka"
     },
     {
       "id": "almaty",
@@ -1783,8 +1939,8 @@
       "timezone": "Asia/Almaty"
     },
     {
-      "id": "nur-sultan",
-      "name": "Nur-Sultan",
+      "id": "astana",
+      "name": "Astana",
       "country": "Kazakhstan",
       "timezone": "Asia/Almaty"
     },
@@ -2299,4 +2455,4 @@
       "timezone": "Pacific/Tongatapu"
     }
   ]
-} 
+}

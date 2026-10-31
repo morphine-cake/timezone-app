@@ -4,8 +4,9 @@ import SwiftUI
 /// The whole app screen (app/page.tsx): loading splash, sticky header with logo, "+" button,
 /// time slider and reference city, the scrolling city list, and the Add City overlay.
 struct RootView: View {
-    @State private var store = CityStore()
-    @State private var catalog = (try? CityCatalog()) ?? CityCatalog(cities: [])
+    @State private var store = CityStore(localCity: .local(catalog: .bundled))
+    @Environment(\.scenePhase) private var scenePhase
+    private let catalog = CityCatalog.bundled
     @State private var now = Date()
     @State private var offset = 0
     @State private var revealedID: String?
@@ -39,6 +40,10 @@ struct RootView: View {
             }
         }
         .onReceive(ticker) { now = $0 }
+        // Catches a time zone change made while the app was suspended.
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { store.refreshLocalCity() }
+        }
         .task {
             try? await Task.sleep(for: .seconds(Tokens.Motion.loadingScreenDuration))
             showsLoading = false

@@ -76,6 +76,20 @@ struct CityStoreTests {
         #expect(store.cities[2].id == "london")
     }
 
+    @Test func localCityFollowsTimeZoneChanges() throws {
+        var zone = "Europe/Istanbul"
+        let store = CityStore(defaults: defaults, cloud: cloud, localCity: .local(timeZoneIdentifier: zone, catalog: .bundled))
+        #expect(store.reference.name == "Ankara")
+
+        zone = "Asia/Tokyo"
+        store.refreshLocalCity()
+        #expect(store.reference.id == City.localCityID)
+        #expect(store.reference.name == "Tokyo")
+        #expect(store.reference.timezone == "Asia/Tokyo")
+        #expect(store.cities.count == 6)
+        #expect(!(try savedIDs()).contains(City.localCityID))
+    }
+
     // MARK: iCloud
 
     @Test func iCloudListWinsOverLocalMirrorAtLaunch() throws {
