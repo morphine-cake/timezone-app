@@ -18,11 +18,13 @@ enum Tokens {
         static let focusBorder = Color.white.opacity(0.2)
         static let fillHover = Color.white.opacity(0.04)
         static let fillPressed = Color.white.opacity(0.08)
+        /// A city row while it is picked up.
+        static let liftedRow = Color(hex: 0x1E1E1E)
     }
 
     enum Typography {
         static let cityName = TextStyle(font: .manropeRegular, size: 24, lineHeight: 32, tracking: 1)
-        static let time = TextStyle(font: .manropeRegular, size: 24, lineHeight: 32, tracking: 2)
+        static let time = TextStyle(font: .geistMonoRegular, size: 24, lineHeight: 32, tracking: 2)
         static let meta = TextStyle(font: .firaMonoRegular, size: 12, lineHeight: 14, tracking: 1, uppercase: true)
         static let modalTitle = TextStyle(font: .manropeMedium, size: 24, lineHeight: 32, tracking: 0)
         static let search = TextStyle(font: .manropeRegular, size: 16, lineHeight: 24, tracking: 0)

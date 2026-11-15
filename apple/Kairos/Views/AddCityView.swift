@@ -9,28 +9,41 @@ struct AddCityView: View {
     let onDismiss: () -> Void
 
     @State private var isVisible = false
+    @State private var isListReady = false
     @State private var focusedIndex: Int?
     @FocusState private var isSearchFocused: Bool
+
+    private static let entrance = Animation.easeOut(duration: 0.2)
 
     private var results: [City] { catalog.search(query) }
 
     var body: some View {
         VStack(spacing: 0) {
             header
-                .staged(isVisible, delay: 0.1, rise: -20)
+                .staged(isVisible, delay: 0, rise: -20)
             searchField
-                .staged(isVisible, delay: 0.2, rise: -20)
-            list
-                .staged(isVisible, delay: 0.3, rise: 20)
+                .staged(isVisible, delay: 0, rise: -20)
+            if isListReady {
+                list
+                    .staged(isVisible, delay: 0, rise: 20)
+            } else {
+                Spacer()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .scaleEffect(isVisible ? 1 : 0.95)
         .offset(y: isVisible ? 0 : 20)
-        .background(Tokens.Colors.background.ignoresSafeArea())
         .opacity(isVisible ? 1 : 0)
-        .animation(Tokens.Motion.sheet, value: isVisible)
-        .onAppear {
-            isVisible = true
+        // The page is there from the first frame (opaque background); only its content fades in.
+        .background(Tokens.Colors.background.ignoresSafeArea())
+        .animation(Self.entrance, value: isVisible)
+        .onAppear { isVisible = true }
+        // Build the 50 rows and raise the keyboard one beat after the page is on screen, so
+        // tapping "+" never waits for them.
+        .task {
+            await Task.yield()
+            isListReady = true
+            try? await Task.sleep(for: .milliseconds(150))
             isSearchFocused = true
         }
         .onChange(of: query) { focusedIndex = nil }
@@ -89,11 +102,7 @@ struct AddCityView: View {
                 .allowsHitTesting(false)
         }
         .padding(.horizontal, Tokens.Layout.horizontalPadding)
-        .padding(.bottom, 24)
         .frame(maxWidth: Tokens.Layout.maxContentWidth)
-        .overlay(alignment: .bottom) {
-            Rectangle().fill(Tokens.Colors.dividerRow).frame(height: 1)
-        }
     }
 
     @ViewBuilder
@@ -124,6 +133,16 @@ struct AddCityView: View {
                     .padding(.horizontal, Tokens.Layout.horizontalPadding)
                     .frame(maxWidth: .infinity)
                 }
+                // Rows fade out over 24 pt as they scroll under the search field.
+                .mask {
+                    VStack(spacing: 0) {
+                        LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
+                            .frame(height: 24)
+                        Color.black
+                    }
+                }
+                // A margin (not padding), so scrolling a row into view stops below the fade.
+                .contentMargins(.top, 24, for: .scrollContent)
                 .scrollDismissesKeyboard(.immediately)
                 .onChange(of: focusedIndex) { _, index in
                     guard let index, cities.indices.contains(index) else { return }
@@ -230,6 +249,6 @@ private extension View {
     func staged(_ visible: Bool, delay: TimeInterval, rise: CGFloat) -> some View {
         opacity(visible ? 1 : 0)
             .offset(y: visible ? 0 : rise)
-            .animation(Tokens.Motion.sheet.delay(delay), value: visible)
+            .animation(.easeOut(duration: 0.2).delay(delay), value: visible)
     }
 }

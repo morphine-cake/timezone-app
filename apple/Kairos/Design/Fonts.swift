@@ -6,6 +6,7 @@ enum KairosFont: String, CaseIterable {
     case manropeRegular = "Manrope-Regular"
     case manropeMedium = "Manrope-Medium"
     case firaMonoRegular = "FiraMono-Regular"
+    case geistMonoRegular = "GeistMono-Regular"
 
     /// Registers the bundled .ttf files for this process. Done in code instead of
     /// UIAppFonts / ATSApplicationFontsPath so one mechanism works on iOS and macOS.
