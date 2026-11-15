@@ -15,6 +15,16 @@ interface City {
   timezone: string;
 }
 
+// "+2H", "-45M", "+5H 30M" — keeps half- and quarter-hour zones (India, Nepal, Adelaide)
+const formatSignedDuration = (minutes: number) => {
+  const sign = minutes < 0 ? "-" : "+";
+  const hours = Math.floor(Math.abs(minutes) / 60);
+  const mins = Math.abs(minutes) % 60;
+  if (mins === 0) return `${sign}${hours}H`;
+  if (hours === 0) return `${sign}${mins}M`;
+  return `${sign}${hours}H ${mins}M`;
+};
+
 // Logo component with the provided SVG
 const KairosLogo = () => (
   <div className="flex items-center justify-center">
@@ -357,21 +367,16 @@ export default function Home() {
     // Get the reference timezone (first city)
     const referenceTimezone = selectedCities[0]?.timezone || "Europe/Istanbul";
 
-    // Calculate timezone offset difference
-    const now = DateTime.now();
-    const referenceOffset = now.setZone(referenceTimezone).offset;
-    const cityOffset = now.setZone(timezone).offset;
-
-    // Calculate the difference in hours
-    const diffHours = Math.round((cityOffset - referenceOffset) / 60);
+    // Compare offsets at the slider-shifted moment, so sliding across a
+    // daylight saving change shows the difference that applies then
+    const adjustedTime = getAdjustedTime(timezone);
+    const referenceOffset = getAdjustedTime(referenceTimezone).offset;
+    const diffMinutes = adjustedTime.offset - referenceOffset;
 
     // Get the official timezone abbreviation (e.g., AEDT, PST, IST, etc.)
-    const adjustedTime = getAdjustedTime(timezone);
     const timezoneAbbreviation = adjustedTime.toFormat("ZZZZ");
 
-    return `${
-      diffHours >= 0 ? "+" : ""
-    }${diffHours}H / ${timezoneAbbreviation}`;
+    return `${formatSignedDuration(diffMinutes)} / ${timezoneAbbreviation}`;
   };
 
   // Loading screen component
@@ -574,12 +579,12 @@ export default function Home() {
                   <AnimatedTimeDisplay
                     timezone={selectedCities[0].timezone}
                     timeOffset={timeOffset}
-                    className="current-time-display text-white font-manrope"
+                    className="current-time-display text-white"
                     style={{
                       fontSize: "24px",
                       lineHeight: "32px",
                       letterSpacing: "2px",
-                      fontFamily: "var(--font-manrope)",
+                      fontFamily: "var(--font-geist-mono)",
                       margin: "0",
                     }}
                   />
@@ -769,12 +774,12 @@ export default function Home() {
                       <AnimatedTimeDisplay
                         timezone={city.timezone}
                         timeOffset={timeOffset}
-                        className="current-time-display text-white font-manrope"
+                        className="current-time-display text-white"
                         style={{
                           fontSize: "24px",
                           lineHeight: "32px",
                           letterSpacing: "2px",
-                          fontFamily: "var(--font-manrope)",
+                          fontFamily: "var(--font-geist-mono)",
                           margin: "0",
                         }}
                       />

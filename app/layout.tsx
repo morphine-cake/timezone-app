@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Fira_Mono, Manrope } from "next/font/google";
+import { Fira_Mono, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({
   variable: "--font-manrope",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -105,7 +110,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${firaMono.variable} antialiased bg-black text-white font-sans`}
+        className={`${manrope.variable} ${firaMono.variable} ${geistMono.variable} antialiased bg-black text-white font-sans`}
         style={{ margin: 0, padding: 0, backgroundColor: "#000000" }}
       >
         {children}
